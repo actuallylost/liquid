@@ -2,7 +2,7 @@ import * as Discord from "discord.js";
 
 import { ownerID } from "../ownerID";
 
-export const clear = (
+export const evalCmd = (
   client: Discord.Client,
   message: Discord.Message,
   args: any[]
@@ -17,6 +17,7 @@ export const clear = (
   args = message.content.split(" ").slice(1);
 
   if (message.author.id !== ownerID) {
+    222;
     const evalEmbed = new Discord.RichEmbed()
       .setTitle("Eval Error")
       .setColor("#d91818")
