@@ -10,7 +10,7 @@ export const avatar = (
       .setColor("#f97b1b")
       .setAuthor(`${message.author.username}'s Avatar`)
       .setImage(message.author.avatarURL)
-      .setFooter("Shield Dev", client.user.avatarURL)
+      .setFooter("Liquid", client.user.avatarURL)
       .setTimestamp();
     message.channel.send(avatarAuthor);
   } else {
@@ -19,7 +19,7 @@ export const avatar = (
       .setColor("#f97b1b")
       .setAuthor(`${user.username}'s Avatar`)
       .setImage(user.avatarURL)
-      .setFooter("Shield Dev", client.user.avatarURL)
+      .setFooter("Liquid", client.user.avatarURL)
       .setTimestamp();
     message.channel.send(avatarEmbed);
   }
