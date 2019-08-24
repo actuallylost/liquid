@@ -10,7 +10,7 @@ export const info = (
   const botinfoEmbed = new Discord.RichEmbed()
     .setTitle("Bot Information")
     .setColor("#e825a7")
-    .addField("Bot Owner:", "Coding Wolfie#9999")
+    .addField("Bot Owner:", "Lost#9999")
     .addField("Server Count:", client.guilds.size)
     .addField("Uptime", padUptime(client.uptime / 1000))
     .addField("Latency:", Math.round(client.ping))
