@@ -113,11 +113,11 @@ export const ban = (
   }
 
   if (!userToBan.bannable) {
-    const banErrorbannable = new Discord.RichEmbed()
+    const banErrorBannable = new Discord.RichEmbed()
       .setTitle("Ban Error")
       .setColor("#d91818")
       .setDescription(":x: Oops! That user is not able to be banned.");
-    return message.channel.send(banErrorbannable);
+    return message.channel.send(banErrorBannable);
   }
 
   if (userToBan == message.member) {
@@ -205,4 +205,18 @@ export const addrole = (
   let rMember =
     message.guild.member(message.mentions.users.first()) ||
     message.guild.members.get(args[1]);
+
+  if (!rMember) {
+    const roleErrorNone = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! It seems like you forgot to input a user to add a role to. Format is `+addrole <user> <role>`."
+      );
+    return message.channel.send(roleErrorNone);
+  }
+
+  const roleToAdd = args[2];
+  if (!roleToAdd) {
+  }
 };
