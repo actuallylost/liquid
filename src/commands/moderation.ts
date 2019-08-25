@@ -155,10 +155,14 @@ export const unban = async (
   message: Discord.Message,
   args: any[]
 ) => {
-  if (!args[0]) {
-    return message.channel.send(
-      ":x: Oops! It seems like you forgot to input a user to unban. Format is `+unban <user> [reason]`."
-    );
+  if (!args[1]) {
+    const unbanError = new Discord.RichEmbed()
+      .setTitle("Unban Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! It seems like you forgot to input a user to unban. Format is `+unban <user> [reason]`."
+      );
+    return message.channel.send(unbanError);
   }
 
   const userToUnban = message.guild.members.get(args[0])
@@ -181,4 +185,24 @@ export const unban = async (
       )
     )
     .catch(console.error);
+};
+
+export const addrole = (
+  client: Discord.Client,
+  message: Discord.Message,
+  args: any[]
+) => {
+  if (!message.member.hasPermission("MANAGE_ROLES")) {
+    const roleErrorNoPerms = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! You don't have permissions to run this command."
+      );
+    return message.channel.send(roleErrorNoPerms);
+  }
+
+  let rMember =
+    message.guild.member(message.mentions.users.first()) ||
+    message.guild.members.get(args[1]);
 };
