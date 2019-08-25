@@ -113,11 +113,11 @@ export const ban = (
   }
 
   if (!userToBan.bannable) {
-    const banErrorbanable = new Discord.RichEmbed()
+    const banErrorbannable = new Discord.RichEmbed()
       .setTitle("Ban Error")
       .setColor("#d91818")
       .setDescription(":x: Oops! That user is not able to be banned.");
-    return message.channel.send(banErrorbanable);
+    return message.channel.send(banErrorbannable);
   }
 
   if (userToBan == message.member) {
@@ -166,7 +166,11 @@ export const unban = async (
     : message.mentions.members.first();
 
   await message.guild.unban(userToUnban).catch((err) => {
-    return message.channel.send(":x: Could not unban user.");
+    const unbanError = new Discord.RichEmbed()
+      .setTitle("Unban Error")
+      .setColor("#d91818")
+      .setDescription(":x: Oops! Could not unban that user.");
+    return message.channel.send(unbanError);
   });
 
   return message.guild
