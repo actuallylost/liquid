@@ -1,17 +1,25 @@
 import * as Discord from "discord.js";
-import * as readline from "readline";
+// import * as readline from "readline";
 
-import { clear } from "./commands/clear";
-import { ownerID } from "./ownerID";
 import { token } from "./token";
+
+import { avatar } from "./commands/avatar";
+import { botinfo } from "./commands/botinfo";
+import { clear } from "./commands/clear";
+import { evalCmd } from "./commands/eval";
+import { hug } from "./commands/hug";
+import { info } from "./commands/info";
+import { kick, ban, unban } from "./commands/moderation";
+import { say } from "./commands/say";
+import { support } from "./commands/support";
 
 const client = new Discord.Client();
 const prefix = "+";
 
-const rl = readline.createInterface({
+/* const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
-});
+}); */
 
 var channelToTalkIn: Discord.TextChannel;
 
@@ -21,7 +29,7 @@ client.on("ready", () => {
   client.user.setStatus("dnd");
 });
 
-rl.on("line", (input) => {
+/* rl.on("line", (input) => {
   if (input.startsWith("!channel")) {
     if (
       !client.channels.get(input.split(" ")[1]) ||
@@ -38,7 +46,7 @@ rl.on("line", (input) => {
   if (channelToTalkIn) {
     channelToTalkIn.send(input);
   }
-});
+});*/
 
 client.on("message", (message) => {
   console.log(message.author.tag, message.content);
@@ -53,8 +61,38 @@ client.on("message", (message) => {
     .split(" ");
 
   switch (args[0]) {
+    case "avatar": {
+      avatar(client, message, args);
+    }
+    case "botinfo": {
+      botinfo(client, message, args);
+    }
     case "clear": {
       clear(client, message, args);
+    }
+    case "eval": {
+      evalCmd(client, message, args);
+    }
+    case "hug": {
+      hug(client, message, args);
+    }
+    case "info": {
+      info(client, message, args);
+    }
+    case "kick": {
+      kick(client, message, args);
+    }
+    case "ban": {
+      ban(client, message, args);
+    }
+    case "unban": {
+      unban(client, message, args);
+    }
+    case "say": {
+      say(client, message, args);
+    }
+    case "support": {
+      support(client, message, args);
     }
   }
 });

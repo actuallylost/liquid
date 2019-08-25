@@ -1,13 +1,15 @@
 import * as Discord from "discord.js";
 
-export const info = (
+export const support = (
   client: Discord.Client,
   message: Discord.Message,
   args: any[]
 ) => {
   let issueReason = args.join(" ");
   if (!issueReason) {
-    return message.channel.send("Missing arguments `<issue>`.");
+    return message.channel.send(
+      ":x: Oops! It seems like you forgot to input an issue. Format is `+support <issue>`."
+    );
   }
 
   let issueEmbed = new Discord.RichEmbed()

@@ -2,7 +2,7 @@ import * as Discord from "discord.js";
 
 import { padUptime } from "../padUptime";
 
-export const info = (
+export const botinfo = (
   client: Discord.Client,
   message: Discord.Message,
   args: any[]
