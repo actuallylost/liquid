@@ -63,36 +63,47 @@ client.on("message", (message) => {
   switch (args[0]) {
     case "avatar": {
       avatar(client, message, args);
+      break;
     }
     case "botinfo": {
       botinfo(client, message, args);
+      break;
     }
     case "clear": {
       clear(client, message, args);
+      break;
     }
     case "eval": {
       evalCmd(client, message, args);
+      break;
     }
     case "hug": {
       hug(client, message, args);
+      break;
     }
     case "info": {
       info(client, message, args);
+      break;
     }
     case "kick": {
       kick(client, message, args);
+      break;
     }
     case "ban": {
       ban(client, message, args);
+      break;
     }
     case "unban": {
       unban(client, message, args);
+      break;
     }
     case "say": {
       say(client, message, args);
+      break;
     }
     case "support": {
       support(client, message, args);
+      break;
     }
   }
 });
