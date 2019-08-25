@@ -149,3 +149,32 @@ export const ban = (
   userToBan.ban();
   return message.channel.send(banEmbedReason);
 };
+
+export const unban = async (
+  client: Discord.Client,
+  message: Discord.Message,
+  args: any[]
+) => {
+  if (!args[0]) {
+    return message.channel.send(
+      ":x: Oops! It seems like you forgot to input a user to unban. Format is `+unban <user> [reason]`."
+    );
+  }
+
+  const userToUnban = message.guild.members.get(args[0])
+    ? message.guild.members.get(args[0])
+    : message.mentions.members.first();
+
+  await message.guild.unban(userToUnban).catch((err) => {
+    return message.channel.send(":x: Could not unban user.");
+  });
+
+  return message.guild
+    .unban(`${userToUnban.id}`)
+    .then((userToUnban) =>
+      message.channel.send(
+        `:white_check_mark: Gotcha! ${userToUnban} has been unbanned.`
+      )
+    )
+    .catch(console.error);
+};
