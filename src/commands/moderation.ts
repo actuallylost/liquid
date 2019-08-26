@@ -15,13 +15,13 @@ export const kick = (
     return message.channel.send(kickErrorNoPerms);
   }
   if (!args[1]) {
-    const kickErrorNone = new Discord.RichEmbed()
+    const kickErrorNoUser = new Discord.RichEmbed()
       .setTitle("Kick Error")
       .setColor("#d91818")
       .setDescription(
         ":x: Oops! It seems like you forgot to input a user to kick. Format is `+kick <user> [reason]`."
       );
-    return message.channel.send(kickErrorNone);
+    return message.channel.send(kickErrorNoUser);
   }
 
   const userToKick = message.mentions.members.first();
@@ -92,13 +92,13 @@ export const ban = (
     return message.channel.send(banErrorNoPerms);
   }
   if (!args[1]) {
-    const banErrorNone = new Discord.RichEmbed()
+    const banErrorNoUser = new Discord.RichEmbed()
       .setTitle("Ban Error")
       .setColor("#d91818")
       .setDescription(
         ":x: Oops! It seems like you forgot to input a user to ban. Format is `+ban <user> [reason]`."
       );
-    return message.channel.send(banErrorNone);
+    return message.channel.send(banErrorNoUser);
   }
 
   const userToBan = message.mentions.members.first();
@@ -156,13 +156,13 @@ export const unban = async (
   args: any[]
 ) => {
   if (!args[1]) {
-    const unbanError = new Discord.RichEmbed()
+    const unbanErrorNoUser = new Discord.RichEmbed()
       .setTitle("Unban Error")
       .setColor("#d91818")
       .setDescription(
         ":x: Oops! It seems like you forgot to input a user to unban. Format is `+unban <user> [reason]`."
       );
-    return message.channel.send(unbanError);
+    return message.channel.send(unbanErrorNoUser);
   }
 
   const userToUnban = message.guild.members.get(args[0])
@@ -207,16 +207,49 @@ export const addrole = (
     message.guild.members.get(args[1]);
 
   if (!rMember) {
-    const roleErrorNone = new Discord.RichEmbed()
+    const roleErrorNoUser = new Discord.RichEmbed()
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
         ":x: Oops! It seems like you forgot to input a user to add a role to. Format is `+addrole <user> <role>`."
       );
-    return message.channel.send(roleErrorNone);
+    return message.channel.send(roleErrorNoUser);
   }
 
   const roleToAdd = args[2];
   if (!roleToAdd) {
+    const roleErrorNoRole = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! It seems like you forgot to input a role. Format is `+addrole <user> <role>`."
+      );
+    return message.channel.send(roleErrorNoRole);
   }
+  if (rMember == null) {
+    const roleUserErrorNonexistant = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+addrole <user> <role>`."
+      );
+    return message.channel.send(roleUserErrorNonexistant);
+  }
+  if (roleToAdd == null) {
+    const roleErrorNonexistant = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! That role doesn't exist, maybe you typed something wrong? Format is `+addrole <user> <role>`."
+      );
+    return message.channel.send(roleErrorNonexistant);
+  }
+  const roleEmbed = new Discord.RichEmbed()
+    .setTitle("Role Added")
+    .setColor("#2bd642")
+    .setDescription(
+      `:white_check_mark: Gotcha! Added ${roleToAdd} to ${rMember}!`
+    );
+  rMember.addRole(roleToAdd);
+  return message.channel.send(roleEmbed);
 };
