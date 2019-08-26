@@ -9,7 +9,7 @@ import { clear } from "./commands/clear";
 import { evalCmd } from "./commands/eval";
 import { hug } from "./commands/hug";
 import { info } from "./commands/info";
-import { kick, ban, unban } from "./commands/moderation";
+import { kick, ban, unban, addrole } from "./commands/moderation";
 import { say } from "./commands/say";
 import { support } from "./commands/support";
 
@@ -103,6 +103,10 @@ client.on("message", (message) => {
     }
     case "support": {
       support(client, message, args);
+      break;
+    }
+    case "addrole": {
+      addrole(client, message, args);
       break;
     }
   }
