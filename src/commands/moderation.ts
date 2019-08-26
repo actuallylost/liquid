@@ -45,7 +45,7 @@ export const kick = (
     return message.channel.send(kickErrorKickable);
   }
 
-  if (userToKick == message.member) {
+  if (userToKick.id == message.member.id) {
     const kickErrorSelf = new Discord.RichEmbed()
       .setTitle("Kick Error")
       .setColor("#d91818")
@@ -203,8 +203,7 @@ export const addrole = (
   }
 
   let rMember =
-    message.guild.member(message.mentions.users.first()) ||
-    message.guild.members.get(args[1]);
+    message.mentions.members.first() || message.guild.members.get(args[1]);
 
   if (!rMember) {
     const roleErrorNoUser = new Discord.RichEmbed()
@@ -216,7 +215,9 @@ export const addrole = (
     return message.channel.send(roleErrorNoUser);
   }
 
-  const roleToAdd = args[2];
+  const roleToAdd = message.mentions.roles.first()
+    ? message.mentions.roles.first().id
+    : args[2];
   if (!roleToAdd) {
     const roleErrorNoRole = new Discord.RichEmbed()
       .setTitle("Role Error")

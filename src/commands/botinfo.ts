@@ -12,8 +12,9 @@ export const botinfo = (
     .setColor("#e825a7")
     .addField("Bot Owner:", "Lost#9999")
     .addField("Server Count:", client.guilds.size)
-    .addField("Uptime", padUptime(client.uptime / 1000))
-    .addField("Latency:", Math.round(client.ping))
+    .addField("Uptime:", padUptime(client.uptime / 1000))
+    .addField("Latency:", `${Math.round(client.ping)}ms`)
+    .addField("Version:", "0.1.0")
     .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
     .setTimestamp();
   return message.channel.send(botinfoEmbed);
