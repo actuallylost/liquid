@@ -254,3 +254,71 @@ export const addrole = (
   rMember.addRole(roleToAdd);
   return message.channel.send(roleEmbed);
 };
+
+export const removerole = (
+  client: Discord.Client,
+  message: Discord.Message,
+  args: any[]
+) => {
+  if (!message.member.hasPermission("MANAGE_ROLES")) {
+    const roleErrorNoPerms = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! You don't have permissions to run this command."
+      );
+    return message.channel.send(roleErrorNoPerms);
+  }
+
+  let rMember =
+    message.mentions.members.first() || message.guild.members.get(args[1]);
+
+  if (!rMember) {
+    const roleErrorNoUser = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! It seems like you forgot to input a user to add a role to. Format is `+removerole <user> <role>`."
+      );
+    return message.channel.send(roleErrorNoUser);
+  }
+
+  const roleToRemove = message.mentions.roles.first()
+    ? message.mentions.roles.first().id
+    : args[2];
+  if (!roleToRemove) {
+    const roleErrorNoRole = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! It seems like you forgot to input a role. Format is `+removerole <user> <role>`."
+      );
+    return message.channel.send(roleErrorNoRole);
+  }
+  if (rMember == null) {
+    const roleUserErrorNonexistant = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+removerole <user> <role>`."
+      );
+    return message.channel.send(roleUserErrorNonexistant);
+  }
+  if (roleToRemove == null) {
+    const roleErrorNonexistant = new Discord.RichEmbed()
+      .setTitle("Role Error")
+      .setColor("#d91818")
+      .setDescription(
+        ":x: Oops! That role doesn't exist, maybe you typed something wrong? Format is `+removerole <user> <role>`."
+      );
+    return message.channel.send(roleErrorNonexistant);
+  }
+  const roleEmbed = new Discord.RichEmbed()
+    .setTitle("Role Removed")
+    .setColor("#2bd642")
+    .setDescription(
+      `:white_check_mark: Gotcha! Removed ${roleToRemove} from ${rMember}!`
+    );
+  rMember.removeRole(roleToRemove);
+  return message.channel.send(roleEmbed);
+};

@@ -1,4 +1,5 @@
 import * as Discord from "discord.js";
+import * as mongoose from "mongoose";
 // import * as readline from "readline";
 
 import { token } from "./token";
@@ -9,7 +10,7 @@ import { clear } from "./commands/clear";
 import { evalCmd } from "./commands/eval";
 import { hug } from "./commands/hug";
 import { info } from "./commands/info";
-import { kick, ban, unban, addrole } from "./commands/moderation";
+import { kick, ban, unban, addrole, removerole } from "./commands/moderation";
 import { say } from "./commands/say";
 import { support } from "./commands/support";
 
@@ -109,7 +110,13 @@ client.on("message", (message) => {
       addrole(client, message, args);
       break;
     }
+    case "removerole": {
+      removerole(client, message, args);
+      break;
+    }
   }
 });
 
-client.login(token);
+mongoose
+  .connect("mongodb://localhost:27017/liquid", { useNewUrlParser: true })
+  .then(() => client.login(token));
