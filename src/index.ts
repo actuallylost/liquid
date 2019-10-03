@@ -13,6 +13,7 @@ import { info } from "./commands/info";
 import { kick, ban, unban, addrole, removerole } from "./commands/moderation";
 import { say } from "./commands/say";
 import { support } from "./commands/support";
+import { suggest } from "./commands/suggest";
 
 const client = new Discord.Client();
 const prefix = "+";
@@ -50,7 +51,7 @@ client.on("ready", () => {
 });*/
 
 client.on("message", (message) => {
-  console.log(message.author.tag, message.content);
+  //console.log(message.author.tag, message.content);
 
   if (!message.content.startsWith(prefix)) {
     return;
@@ -105,6 +106,9 @@ client.on("message", (message) => {
     case "support": {
       support(client, message, args);
       break;
+    }
+    case "suggest": {
+      suggest(client, message, args);
     }
     case "addrole": {
       addrole(client, message, args);

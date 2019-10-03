@@ -1,19 +1,19 @@
 import * as Discord from "discord.js";
 
-export const support = (
+export const suggest = (
   client: Discord.Client,
   message: Discord.Message,
   args: any[]
 ) => {
-  let issueReason = args[1];
-  if (!issueReason) {
+  let suggestion = args[1];
+  if (!suggestion) {
     return message.channel.send(
-      ":x: Oops! It seems like you forgot to input an issue. Format is `+support <issue>`."
+      ":x: Oops! It seems like you forgot to input a suggestion. Format is `+suggest <suggestion>`."
     );
   }
 
-  let issueEmbed = new Discord.RichEmbed()
-    .setTitle("Issue »")
+  let suggestionEmbed = new Discord.RichEmbed()
+    .setTitle("Suggestion »")
     .setColor("#c91010")
     .addField(
       "Submitted By »",
@@ -22,7 +22,7 @@ export const support = (
     .addField("Server »", message.guild)
     .addField("Channel »", message.channel)
     .addField("Time »", message.createdAt)
-    .addField("Issue »", issueReason)
+    .addField("Suggestion »", suggestion)
     .setFooter("Liquid", client.user.avatarURL)
     .setTimestamp();
 
@@ -30,7 +30,7 @@ export const support = (
     .setColor("#03bc22")
     .addField(
       "Success!",
-      `:white_check_mark: Issue successfully submitted, the developer will review it as soon as possible, and investigate!`
+      `:white_check_mark: Suggestion successfully submitted, the developer will review it as soon as possible!.`
     )
     .setFooter("Liquid", client.user.avatarURL)
     .setTimestamp();
@@ -38,6 +38,6 @@ export const support = (
   message.delete(500).catch((err) => {});
   message.author.send(confirmEmbed);
   return (message.guild.channels.get(
-    "629050917680971776"
-  ) as Discord.TextChannel).send(issueEmbed);
+    "629050929064312852"
+  ) as Discord.TextChannel).send(suggestionEmbed);
 };
