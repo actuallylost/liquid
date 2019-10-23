@@ -3,7 +3,7 @@ import * as Discord from "discord.js";
 export const avatar = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: any[],
 ) => {
   if (!message.mentions.users.size) {
     const avatarAuthor = new Discord.RichEmbed()

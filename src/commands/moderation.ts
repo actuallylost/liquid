@@ -3,14 +3,14 @@ import * as Discord from "discord.js";
 export const kick = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: any[],
 ) => {
   if (!message.member.hasPermission("KICK_MEMBERS")) {
     const kickErrorNoPerms = new Discord.RichEmbed()
       .setTitle("Ban Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! You don't have permissions to run this command."
+        ":x: Oops! You don't have permissions to run this command.",
       );
     return message.channel.send(kickErrorNoPerms);
   }
@@ -19,7 +19,7 @@ export const kick = (
       .setTitle("Kick Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! It seems like you forgot to input a user to kick. Format is `+kick <user> [reason]`."
+        ":x: Oops! It seems like you forgot to input a user to kick. Format is `+kick <user> [reason]`.",
       );
     return message.channel.send(kickErrorNoUser);
   }
@@ -30,7 +30,7 @@ export const kick = (
       .setTitle("Kick Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+kick <user> [reason]`."
+        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+kick <user> [reason]`.",
       );
     return message.channel.send(kickErrorNonexistant);
   }
@@ -40,17 +40,17 @@ export const kick = (
       .setTitle("Kick Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! That user is not able to be kicked. Format is `+kick <user> [reason]`."
+        ":x: Oops! That user is not able to be kicked. Format is `+kick <user> [reason]`.",
       );
     return message.channel.send(kickErrorKickable);
   }
 
-  if (userToKick.id == message.member.id) {
+  if (userToKick.id === message.member.id) {
     const kickErrorSelf = new Discord.RichEmbed()
       .setTitle("Kick Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! You cannot kick yourself dummy! Format is `+kick <user> [reason]`."
+        ":x: Oops! You cannot kick yourself dummy! Format is `+kick <user> [reason]`.",
       );
     return message.channel.send(kickErrorSelf);
   }
@@ -61,7 +61,7 @@ export const kick = (
       .setTitle(`${userToKick.user.username} was successfully kicked`)
       .setColor("#2bd642")
       .setDescription(
-        `:white_check_mark: Gotcha! ${userToKick} has been kicked.`
+        `:white_check_mark: Gotcha! ${userToKick} has been kicked.`,
       );
     userToKick.kick();
     return message.channel.send(kickEmbedNoReason);
@@ -71,7 +71,7 @@ export const kick = (
     .setTitle(`${userToKick.user.username} was successfully kicked`)
     .setColor("#2bd642")
     .setDescription(
-      `:white_check_mark: Gotcha! ${userToKick} has been kicked for ${kickReason}.`
+      `:white_check_mark: Gotcha! ${userToKick} has been kicked for ${kickReason}.`,
     );
   userToKick.kick();
   return message.channel.send(kickEmbedReason);
@@ -80,14 +80,14 @@ export const kick = (
 export const ban = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: any[],
 ) => {
   if (!message.member.hasPermission("BAN_MEMBERS")) {
     const banErrorNoPerms = new Discord.RichEmbed()
       .setTitle("Ban Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! You don't have permissions to run this command."
+        ":x: Oops! You don't have permissions to run this command.",
       );
     return message.channel.send(banErrorNoPerms);
   }
@@ -96,7 +96,7 @@ export const ban = (
       .setTitle("Ban Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! It seems like you forgot to input a user to ban. Format is `+ban <user> [reason]`."
+        ":x: Oops! It seems like you forgot to input a user to ban. Format is `+ban <user> [reason]`.",
       );
     return message.channel.send(banErrorNoUser);
   }
@@ -107,7 +107,7 @@ export const ban = (
       .setTitle("Ban Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+ban <user> [reason]`."
+        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+ban <user> [reason]`.",
       );
     return message.channel.send(banErrorNonexistant);
   }
@@ -120,7 +120,7 @@ export const ban = (
     return message.channel.send(banErrorBannable);
   }
 
-  if (userToBan == message.member) {
+  if (userToBan === message.member) {
     const banErrorSelf = new Discord.RichEmbed()
       .setTitle("Ban Error")
       .setColor("#d91818")
@@ -134,7 +134,7 @@ export const ban = (
       .setTitle(`${userToBan.user.username} was successfully banned`)
       .setColor("#2bd642")
       .setDescription(
-        `:white_check_mark: Gotcha! ${userToBan} has been banned.`
+        `:white_check_mark: Gotcha! ${userToBan} has been banned.`,
       );
     userToBan.ban();
     return message.channel.send(banEmbedNoReason);
@@ -144,7 +144,7 @@ export const ban = (
     .setTitle(`${userToBan.user.username} was successfully banned`)
     .setColor("#2bd642")
     .setDescription(
-      `:white_check_mark: Gotcha! ${userToBan} has been banned for ${banReason}.`
+      `:white_check_mark: Gotcha! ${userToBan} has been banned for ${banReason}.`,
     );
   userToBan.ban();
   return message.channel.send(banEmbedReason);
@@ -153,14 +153,14 @@ export const ban = (
 export const unban = async (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: any[],
 ) => {
   if (!args[1]) {
     const unbanErrorNoUser = new Discord.RichEmbed()
       .setTitle("Unban Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! It seems like you forgot to input a user to unban. Format is `+unban <user> [reason]`."
+        ":x: Oops! It seems like you forgot to input a user to unban. Format is `+unban <user> [reason]`.",
       );
     return message.channel.send(unbanErrorNoUser);
   }
@@ -179,10 +179,10 @@ export const unban = async (
 
   return message.guild
     .unban(`${userToUnban.id}`)
-    .then((userToUnban) =>
+    .then(() =>
       message.channel.send(
-        `:white_check_mark: Gotcha! ${userToUnban} has been unbanned.`
-      )
+        `:white_check_mark: Gotcha! ${userToUnban} has been unbanned.`,
+      ),
     )
     .catch(console.error);
 };
@@ -190,19 +190,19 @@ export const unban = async (
 export const addrole = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: any[],
 ) => {
   if (!message.member.hasPermission("MANAGE_ROLES")) {
     const roleErrorNoPerms = new Discord.RichEmbed()
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! You don't have permissions to run this command."
+        ":x: Oops! You don't have permissions to run this command.",
       );
     return message.channel.send(roleErrorNoPerms);
   }
 
-  let rMember =
+  const rMember =
     message.mentions.members.first() || message.guild.members.get(args[1]);
 
   if (!rMember) {
@@ -210,7 +210,7 @@ export const addrole = (
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! It seems like you forgot to input a user to add a role to. Format is `+addrole <user> <role>`."
+        ":x: Oops! It seems like you forgot to input a user to add a role to. Format is `+addrole <user> <role>`.",
       );
     return message.channel.send(roleErrorNoUser);
   }
@@ -223,7 +223,7 @@ export const addrole = (
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! It seems like you forgot to input a role. Format is `+addrole <user> <role>`."
+        ":x: Oops! It seems like you forgot to input a role. Format is `+addrole <user> <role>`.",
       );
     return message.channel.send(roleErrorNoRole);
   }
@@ -232,7 +232,7 @@ export const addrole = (
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+addrole <user> <role>`."
+        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+addrole <user> <role>`.",
       );
     return message.channel.send(roleUserErrorNonexistant);
   }
@@ -241,7 +241,7 @@ export const addrole = (
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! That role doesn't exist, maybe you typed something wrong? Format is `+addrole <user> <role>`."
+        ":x: Oops! That role doesn't exist, maybe you typed something wrong? Format is `+addrole <user> <role>`.",
       );
     return message.channel.send(roleErrorNonexistant);
   }
@@ -249,7 +249,7 @@ export const addrole = (
     .setTitle("Role Added")
     .setColor("#2bd642")
     .setDescription(
-      `:white_check_mark: Gotcha! Added ${roleToAdd} to ${rMember}!`
+      `:white_check_mark: Gotcha! Added ${roleToAdd} to ${rMember}!`,
     );
   rMember.addRole(roleToAdd);
   return message.channel.send(roleEmbed);
@@ -258,19 +258,19 @@ export const addrole = (
 export const removerole = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: any[],
 ) => {
   if (!message.member.hasPermission("MANAGE_ROLES")) {
     const roleErrorNoPerms = new Discord.RichEmbed()
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! You don't have permissions to run this command."
+        ":x: Oops! You don't have permissions to run this command.",
       );
     return message.channel.send(roleErrorNoPerms);
   }
 
-  let rMember =
+  const rMember =
     message.mentions.members.first() || message.guild.members.get(args[1]);
 
   if (!rMember) {
@@ -278,7 +278,7 @@ export const removerole = (
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! It seems like you forgot to input a user to add a role to. Format is `+removerole <user> <role>`."
+        ":x: Oops! It seems like you forgot to input a user to add a role to. Format is `+removerole <user> <role>`.",
       );
     return message.channel.send(roleErrorNoUser);
   }
@@ -291,7 +291,7 @@ export const removerole = (
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! It seems like you forgot to input a role. Format is `+removerole <user> <role>`."
+        ":x: Oops! It seems like you forgot to input a role. Format is `+removerole <user> <role>`.",
       );
     return message.channel.send(roleErrorNoRole);
   }
@@ -300,7 +300,7 @@ export const removerole = (
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+removerole <user> <role>`."
+        ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+removerole <user> <role>`.",
       );
     return message.channel.send(roleUserErrorNonexistant);
   }
@@ -309,7 +309,7 @@ export const removerole = (
       .setTitle("Role Error")
       .setColor("#d91818")
       .setDescription(
-        ":x: Oops! That role doesn't exist, maybe you typed something wrong? Format is `+removerole <user> <role>`."
+        ":x: Oops! That role doesn't exist, maybe you typed something wrong? Format is `+removerole <user> <role>`.",
       );
     return message.channel.send(roleErrorNonexistant);
   }
@@ -317,7 +317,7 @@ export const removerole = (
     .setTitle("Role Removed")
     .setColor("#2bd642")
     .setDescription(
-      `:white_check_mark: Gotcha! Removed ${roleToRemove} from ${rMember}!`
+      `:white_check_mark: Gotcha! Removed ${roleToRemove} from ${rMember}!`,
     );
   rMember.removeRole(roleToRemove);
   return message.channel.send(roleEmbed);

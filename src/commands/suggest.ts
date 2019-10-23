@@ -3,21 +3,21 @@ import * as Discord from "discord.js";
 export const suggest = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: any[],
 ) => {
-  let suggestion = args[1];
+  const suggestion = args[1];
   if (!suggestion) {
     return message.channel.send(
-      ":x: Oops! It seems like you forgot to input a suggestion. Format is `+suggest <suggestion>`."
+      ":x: Oops! It seems like you forgot to input a suggestion. Format is `+suggest <suggestion>`.",
     );
   }
 
-  let suggestionEmbed = new Discord.RichEmbed()
+  const suggestionEmbed = new Discord.RichEmbed()
     .setTitle("Suggestion »")
     .setColor("#c91010")
     .addField(
       "Submitted By »",
-      `${message.author} with ID: ${message.author.id}`
+      `${message.author} with ID: ${message.author.id}`,
     )
     .addField("Server »", message.guild)
     .addField("Channel »", message.channel)
@@ -26,11 +26,11 @@ export const suggest = (
     .setFooter("Liquid", client.user.avatarURL)
     .setTimestamp();
 
-  let confirmEmbed = new Discord.RichEmbed()
+  const confirmEmbed = new Discord.RichEmbed()
     .setColor("#03bc22")
     .addField(
       "Success!",
-      `:white_check_mark: Suggestion successfully submitted, the developer will review it as soon as possible!.`
+      `:white_check_mark: Suggestion successfully submitted, the developer will review it as soon as possible!.`,
     )
     .setFooter("Liquid", client.user.avatarURL)
     .setTimestamp();
@@ -38,6 +38,6 @@ export const suggest = (
   message.delete(500).catch((err) => {});
   message.author.send(confirmEmbed);
   return (message.guild.channels.get(
-    "629050929064312852"
+    "629050929064312852",
   ) as Discord.TextChannel).send(suggestionEmbed);
 };
