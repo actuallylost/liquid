@@ -35,7 +35,7 @@ export const suggest = (
     .setFooter("Liquid", client.user.avatarURL)
     .setTimestamp();
 
-  message.delete(500).catch((err) => {});
+  message.delete(500).catch((err) => null);
   message.author.send(confirmEmbed);
   return (message.guild.channels.get(
     "629050929064312852",

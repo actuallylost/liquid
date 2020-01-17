@@ -9,6 +9,7 @@ import { evalCmd as eval } from "./commands/eval";
 import { hug } from "./commands/hug";
 import { info } from "./commands/info";
 import { addrole, ban, kick, removerole, unban } from "./commands/moderation";
+import { reverify } from "./commands/reverify";
 import { say } from "./commands/say";
 import { suggest } from "./commands/suggest";
 import { support } from "./commands/support";
@@ -38,6 +39,7 @@ client.commands = new Collection([
   ["say", say],
   ["suggest", suggest],
   ["support", support],
+  ["reverify", reverify],
 ]);
 
 const prefix = "+";
@@ -89,7 +91,9 @@ client
       })
       .catch((e) => {
         console.log(e);
-        member.send("Timed out. Please run x command to reverify.");
+        member.send(
+          "Timed out. Please run the `+reverify` command to reverify.",
+        );
       });
   })
   .on("message", (message) => {
