@@ -1,7 +1,7 @@
 import * as Discord from "discord.js";
 import { inspect } from "util";
 
-import { ownerID } from "../ownerID";
+import { ownerID } from "../env";
 
 const clean = (text) => {
   if (typeof text === "string") {

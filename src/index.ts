@@ -15,7 +15,7 @@ import { suggest } from "./commands/suggest";
 import { support } from "./commands/support";
 
 // Token
-import { token } from "./token";
+import { token } from "./env";
 
 interface ExtendedClient extends Client {
   commands: Collection<

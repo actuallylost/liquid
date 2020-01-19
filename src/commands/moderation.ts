@@ -35,24 +35,20 @@ export const kick = (
     return message.channel.send(kickErrorNonexistant);
   }
 
+  if (userToKick === message.member) {
+    const kickErrorSelf = new Discord.RichEmbed()
+      .setTitle("Kick Error")
+      .setColor("#d91818")
+      .setDescription(":x: Oops! You cannot kick yourself dummy!");
+    return message.channel.send(kickErrorSelf);
+  }
+
   if (!userToKick.kickable) {
     const kickErrorKickable = new Discord.RichEmbed()
       .setTitle("Kick Error")
       .setColor("#d91818")
-      .setDescription(
-        ":x: Oops! That user is not able to be kicked. Format is `+kick <user> [reason]`.",
-      );
+      .setDescription(":x: Oops! That user is not able to be kicked.");
     return message.channel.send(kickErrorKickable);
-  }
-
-  if (userToKick.id === message.member.id) {
-    const kickErrorSelf = new Discord.RichEmbed()
-      .setTitle("Kick Error")
-      .setColor("#d91818")
-      .setDescription(
-        ":x: Oops! You cannot kick yourself dummy! Format is `+kick <user> [reason]`.",
-      );
-    return message.channel.send(kickErrorSelf);
   }
 
   const kickReason = args[2];
@@ -112,20 +108,20 @@ export const ban = (
     return message.channel.send(banErrorNonexistant);
   }
 
-  if (!userToBan.bannable) {
-    const banErrorBannable = new Discord.RichEmbed()
-      .setTitle("Ban Error")
-      .setColor("#d91818")
-      .setDescription(":x: Oops! That user is not able to be banned.");
-    return message.channel.send(banErrorBannable);
-  }
-
   if (userToBan === message.member) {
     const banErrorSelf = new Discord.RichEmbed()
       .setTitle("Ban Error")
       .setColor("#d91818")
       .setDescription(":x: Oops! You cannot ban yourself dummy!");
     return message.channel.send(banErrorSelf);
+  }
+
+  if (!userToBan.bannable) {
+    const banErrorBannable = new Discord.RichEmbed()
+      .setTitle("Ban Error")
+      .setColor("#d91818")
+      .setDescription(":x: Oops! That user is not able to be banned!");
+    return message.channel.send(banErrorBannable);
   }
 
   const banReason = args[2];
