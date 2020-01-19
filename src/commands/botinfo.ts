@@ -24,7 +24,7 @@ export const botinfo = (
     .addField("Server Count:", client.guilds.size)
     .addField("Uptime:", padUptime(client.uptime / 1000))
     .addField("Latency:", `${Math.round(client.ping)}ms`)
-    .addField("Version:", "0.2.0")
+    .addField("Version:", "0.2.1")
     .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
     .setTimestamp();
   return message.channel.send(botinfoEmbed);

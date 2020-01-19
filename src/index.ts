@@ -13,6 +13,7 @@ import { reverify } from "./commands/reverify";
 import { say } from "./commands/say";
 import { suggest } from "./commands/suggest";
 import { support } from "./commands/support";
+
 // Token
 import { token } from "./token";
 
