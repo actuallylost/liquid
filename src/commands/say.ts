@@ -1,6 +1,6 @@
 import * as Discord from "discord.js";
 
-import { ownerID } from "../ownerID";
+import { ownerID } from "../env";
 
 export const say = (
   client: Discord.Client,
