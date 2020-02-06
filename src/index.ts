@@ -1,5 +1,4 @@
 import { Client, Collection, Message } from "discord.js";
-import * as mongoose from "mongoose";
 
 // Commands
 import { avatar } from "./commands/avatar";
@@ -25,23 +24,26 @@ interface ExtendedClient extends Client {
 }
 
 const client = new Client() as ExtendedClient;
-client.commands = new Collection([
-  ["addrole", addrole],
-  ["ban", ban],
-  ["hug", hug],
-  ["info", info],
-  ["kick", kick],
-  ["removerole", removerole],
-  ["avatar", avatar],
-  ["botinfo", botinfo],
-  ["clear", clear],
-  ["eval", eval],
-  ["unban", unban],
-  ["say", say],
-  ["suggest", suggest],
-  ["support", support],
-  ["reverify", reverify],
-]);
+
+client.commands = new Collection(
+  [
+    addrole,
+    ban,
+    hug,
+    info,
+    kick,
+    removerole,
+    avatar,
+    botinfo,
+    clear,
+    eval,
+    unban,
+    say,
+    suggest,
+    support,
+    reverify,
+  ].map((v) => [v.name, v]),
+);
 
 const prefix = "+";
 
@@ -113,6 +115,4 @@ client
     }
   });
 
-mongoose
-  .connect("mongodb://localhost:27017/liquid", { useNewUrlParser: true })
-  .then(() => client.login(token));
+client.login(token);

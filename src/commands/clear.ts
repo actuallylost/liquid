@@ -54,6 +54,7 @@ export const clear = async (
       `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`,
     );
   message.channel.send(clearEmbedUser);
+
   // Above: User Clear | Below: Non-User Clear
   message.channel.bulkDelete(messagesToDelete);
   const clearEmbed = new Discord.RichEmbed()
