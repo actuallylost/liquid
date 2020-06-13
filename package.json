@@ -10,7 +10,7 @@
   "author": "lost the cutie",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.2.0",
     "moment": "^2.24.0",
     "ms": "^2.1.2",
     "nodemon": "^1.19.1",

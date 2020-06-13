@@ -3,9 +3,9 @@ import * as Discord from "discord.js";
 export const reverify = async (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[],
+  args: any[]
 ) => {
-  message.member.addRole("634392381294116904");
+  message.member?.roles.add("634392381294116904");
 
   const hex = "abcdef0123456789";
 
@@ -17,7 +17,7 @@ export const reverify = async (
 
   const dmMessage = (await message.author
     .send(
-      `:wave: Heyo! This server uses our **Verification System**. To be able to have access to the rest of the server, please verify so we know that you're not a bot user. Send ${hexCode} to the bot, in order to be verified.`,
+      `:wave: Heyo! This server uses our **Verification System**. To be able to have access to the rest of the server, please verify so we know that you're not a bot user. Send ${hexCode} to the bot, in order to be verified.`
     )
     .catch((err) => undefined)) as Discord.Message | undefined;
 
@@ -34,19 +34,19 @@ export const reverify = async (
         errors: ["time"],
         max: 1,
         time: 60000,
-      },
+      }
     )
     .then(() => {
       message.author.send(
-        "Thanks for Verifying! You now have access to all of the server.",
+        "Thanks for Verifying! You now have access to all of the server."
       );
-      message.member.removeRole("634392381294116904");
-      message.member.addRole("614903485858578513");
+      message.member?.roles.remove("634392381294116904");
+      message.member?.roles.add("614903485858578513");
     })
     .catch((e) => {
       console.log(e);
       message.author.send(
-        "Timed out. Please run the `+reverify` command to reverify.",
+        "Timed out. Please run the `+reverify` command to reverify."
       );
     });
 };
