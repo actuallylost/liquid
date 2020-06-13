@@ -3,17 +3,19 @@ import * as Discord from "discord.js";
 export const clear = async (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: string[]
 ) => {
-  if (!message.member.hasPermission("MANAGE_MESSAGES")) {
-    const clearErrorNoPerms = new Discord.MessageEmbed()
-      .setTitle("Clear Error")
-      .setColor("#d91818")
-      .setDescription(
-        ":x: Oops! You don't have permissions to run this command."
-      );
-    return message.channel.send(clearErrorNoPerms);
+  if (!message.member?.hasPermission("MANAGE_MESSAGES")) {
+    return message.channel.send(
+      new Discord.MessageEmbed()
+        .setTitle("Clear Error")
+        .setColor("#d91818")
+        .setDescription(
+          ":x: Oops! You don't have permissions to run this command."
+        )
+    );
   }
+
   if (!args[1]) {
     const clearErrorNoAmount = new Discord.MessageEmbed()
       .setTitle("Clear Error")
@@ -34,8 +36,9 @@ export const clear = async (
       );
     return message.channel.send(clearErrorNaN);
   }
-  const userToClear = message.mentions.members.first();
-  if (userToClear == null) {
+
+  const userToClear = message.mentions.members?.first();
+  if (!userToClear) {
     const clearErrorNonexistant = new Discord.MessageEmbed()
       .setTitle("Clear Error")
       .setColor("#d91818")
@@ -44,9 +47,12 @@ export const clear = async (
       );
     return message.channel.send(clearErrorNonexistant);
   }
+
   await message.channel.messages
     .fetch()
     .then((messages) => messages.filter((v) => v.author.id === userToClear.id));
+
+  // User Clear -
   const clearEmbedUser = new Discord.MessageEmbed()
     .setTitle("Clear Successful")
     .setColor("#2bd642")
@@ -55,7 +61,7 @@ export const clear = async (
     );
   message.channel.send(clearEmbedUser);
 
-  // Above: User Clear | Below: Non-User Clear
+  // Non-User Clear -
   message.channel.bulkDelete(messagesToDelete);
   const clearEmbed = new Discord.MessageEmbed()
     .setTitle("Clear Successful")

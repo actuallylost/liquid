@@ -16,7 +16,7 @@ const clean = (text: string) => {
 export const evalCmd = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: string[]
 ) => {
   args = message.content.split(" ").slice(1);
 

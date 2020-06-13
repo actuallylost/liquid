@@ -5,7 +5,7 @@ import { ownerID } from "../env";
 export const say = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: string[]
 ) => {
   if (message.author.id !== ownerID) {
     const sayEmbed = new Discord.MessageEmbed()

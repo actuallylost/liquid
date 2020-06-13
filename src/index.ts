@@ -1,21 +1,25 @@
-import { Client, Collection, Message, ClientUser } from "discord.js";
+import { Client, Collection, Message } from "discord.js";
 
-// Commands
-import { avatar } from "./commands/avatar";
-import { botinfo } from "./commands/botinfo";
-import { clear } from "./commands/clear";
-import { evalCmd as eval } from "./commands/eval";
-import { hug } from "./commands/hug";
-import { info } from "./commands/info";
-import { addRole, ban, kick, removerole, unban } from "./commands/moderation";
-import { prefix } from "./commands/prefix";
-import { reverify } from "./commands/reverify";
-import { say } from "./commands/say";
-import { suggest } from "./commands/suggest";
-import { support } from "./commands/support";
+import {
+  addRole,
+  avatar,
+  ban,
+  botinfo,
+  clear,
+  evalCmd as eval,
+  hug,
+  info,
+  kick,
+  prefix,
+  removeRole,
+  reverify,
+  say,
+  suggest,
+  support,
+  unban,
+} from "./commands";
 // Token
-import { token } from "./env";
-import { botPrefix } from "./env";
+import { botPrefix, token } from "./env";
 
 interface ExtendedClient extends Client {
   commands: Collection<
@@ -38,7 +42,7 @@ client.commands = new Collection(
     info,
     kick,
     prefix,
-    removerole,
+    removeRole,
     reverify,
     say,
     suggest,
@@ -64,11 +68,11 @@ client
       hexCode += hex[Math.round(Math.random() * hex.length)];
     }
 
-    const dmMessage = (await member
+    const dmMessage = await member
       .send(
         `:wave: Heyo! This server uses our **Verification System**. To be able to have access to the rest of the server, please verify so we know that you're not a bot user. Send ${hexCode} to the bot, in order to be verified.`
       )
-      .catch((err: any) => undefined)) as Message | undefined;
+      .catch(() => undefined);
 
     if (!dmMessage) {
       return;

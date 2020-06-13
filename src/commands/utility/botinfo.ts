@@ -15,7 +15,7 @@ export const padUptime = (s: number) => {
 export const botinfo = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: string[]
 ) => {
   const botinfoEmbed = new Discord.MessageEmbed()
     .setTitle("Bot Information")

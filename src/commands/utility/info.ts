@@ -3,7 +3,7 @@ import * as Discord from "discord.js";
 export const info = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: string[]
 ) => {
   const infoEmbed = new Discord.MessageEmbed()
     .setTitle("User Information")
@@ -12,7 +12,7 @@ export const info = (
     .addField("ID:", message.author.id)
     .addField(
       "Roles:",
-      message.member.roles.map((r) => `<@${r.id}>`).join(", ")
+      message.member?.roles.cache.map((r) => `<@${r.id}>`).join(", ") || "None"
     )
     .addField("Created at:", message.author.createdAt)
     .addField("Joined at", message.member?.joinedAt)

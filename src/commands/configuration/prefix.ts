@@ -3,8 +3,13 @@ import * as Discord from "discord.js";
 export const prefix = (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: string[]
 ) => {
+  // Prefix only settable in guilds.
+  if (!message.guild || !message.member) {
+    return;
+  }
+
   const serverPrefixes = new Discord.Collection();
 
   if (!message.member.hasPermission("MANAGE_GUILD")) {

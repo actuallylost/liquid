@@ -3,7 +3,7 @@ import * as Discord from "discord.js";
 export const reverify = async (
   client: Discord.Client,
   message: Discord.Message,
-  args: any[]
+  args: string[]
 ) => {
   message.member.roles.add("634392381294116904");
 
