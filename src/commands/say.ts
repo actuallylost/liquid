@@ -26,6 +26,6 @@ export const say = (
     return message.channel.send(errorEmbed);
   }
 
-  message.delete().catch((err) => null);
+  message.delete({ timeout: 400 }).catch((err) => null);
   message.channel.send(args.join(" "));
 };

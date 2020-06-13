@@ -5,7 +5,7 @@ export const reverify = async (
   message: Discord.Message,
   args: any[]
 ) => {
-  message.member?.roles.add("634392381294116904");
+  message.member.roles.add("634392381294116904");
 
   const hex = "abcdef0123456789";
 
@@ -40,8 +40,8 @@ export const reverify = async (
       message.author.send(
         "Thanks for Verifying! You now have access to all of the server."
       );
-      message.member?.roles.remove("634392381294116904");
-      message.member?.roles.add("614903485858578513");
+      message.member.roles.remove("634392381294116904");
+      message.member.roles.add("614903485858578513");
     })
     .catch((e) => {
       console.log(e);

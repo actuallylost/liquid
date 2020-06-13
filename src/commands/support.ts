@@ -19,11 +19,11 @@ export const support = (
       "Submitted By »",
       `${message.author} with ID: ${message.author.id}`
     )
-    .addField("Server »", message.guild?)
+    .addField("Server »", message.guild)
     .addField("Channel »", message.channel)
     .addField("Time »", message.createdAt)
     .addField("Issue »", issueReason)
-    .setFooter("Liquid", client.user.avatarURL())
+    .setFooter("Liquid", client.user.avatarURL() || undefined)
     .setTimestamp();
 
   const confirmEmbed = new Discord.MessageEmbed()
@@ -32,10 +32,10 @@ export const support = (
       "Success!",
       `:white_check_mark: Issue successfully submitted, the developer will review it as soon as possible, and investigate!`
     )
-    .setFooter("Liquid", client.user.avatarURL())
+    .setFooter("Liquid", client.user.avatarURL() || undefined)
     .setTimestamp();
 
-  message.delete().catch((err) => null);
+  message.delete({ timeout: 400 }).catch((err) => null);
   message.author.send(confirmEmbed);
   return (message.guild?.channels.cache.get(
     "629050917680971776"

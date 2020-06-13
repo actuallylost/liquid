@@ -20,12 +20,15 @@ export const botinfo = (
   const botinfoEmbed = new Discord.MessageEmbed()
     .setTitle("Bot Information")
     .setColor("#e825a7")
-    .addField("Bot Owner:", "Lost#9999")
+    .addField("Bot Owner:", "Lost#1035")
     .addField("Server Count:", client.guilds)
-    .addField("Uptime:", padUptime(client.uptime / 1000))
+    .addField("Uptime:", padUptime(process.uptime() / 1000))
     .addField("Latency:", `${Math.round(client.ws.ping)}ms`)
     .addField("Version:", "0.2.1")
-    .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL())
+    .setFooter(
+      `Requested by ${message.author.tag}`,
+      message.author.avatarURL() || undefined
+    )
     .setTimestamp();
   return message.channel.send(botinfoEmbed);
 };

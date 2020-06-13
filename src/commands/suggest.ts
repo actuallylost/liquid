@@ -19,11 +19,11 @@ export const suggest = (
       "Submitted By »",
       `${message.author} with ID: ${message.author.id}`
     )
-    .addField("Server »", message.guild?)
+    .addField("Server »", message.guild)
     .addField("Channel »", message.channel)
     .addField("Time »", message.createdAt)
     .addField("Suggestion »", suggestion)
-    .setFooter("Liquid", client.user.avatarURL())
+    .setFooter("Liquid", client.user.avatarURL() || undefined)
     .setTimestamp();
 
   const confirmEmbed = new Discord.MessageEmbed()
@@ -32,10 +32,10 @@ export const suggest = (
       "Success!",
       `:white_check_mark: Suggestion successfully submitted, the developer will review it as soon as possible!.`
     )
-    .setFooter("Liquid", client.user.avatarURL())
+    .setFooter("Liquid", client.user.avatarURL() || undefined)
     .setTimestamp();
 
-  message.delete().catch((err) => null);
+  message.delete({ timeout: 400 }).catch((err) => null);
   message.author.send(confirmEmbed);
   return (message.guild?.channels.cache.get(
     "629050929064312852"

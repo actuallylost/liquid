@@ -35,7 +35,7 @@ export const kick = (
     return message.channel.send(kickErrorNonexistant);
   }
 
-  if (userToKick === message.member?) {
+  if (userToKick === message.member) {
     const kickErrorSelf = new Discord.MessageEmbed()
       .setTitle("Kick Error")
       .setColor("#d91818")
@@ -108,7 +108,7 @@ export const ban = (
     return message.channel.send(banErrorNonexistant);
   }
 
-  if (userToBan === message.member?) {
+  if (userToBan === message.member) {
     const banErrorSelf = new Discord.MessageEmbed()
       .setTitle("Ban Error")
       .setColor("#d91818")
@@ -151,8 +151,8 @@ export const unban = async (
   message: Discord.Message,
   args: any[]
 ) => {
-  const userToUnban = message.guild?.members.cache.get(args[0])
-    ? message.guild?.members.cache.get(args[0])
+  const userToUnban = message.guild.members.cache.get(args[0])
+    ? message.guild.members.cache.get(args[0])
     : message.mentions.members.first();
 
   if (!userToUnban) {
@@ -166,7 +166,7 @@ export const unban = async (
   }
 
   try {
-    await message.guild?.members.unban(userToUnban);
+    await message.guild.members.unban(userToUnban);
     message.channel.send(
       `:white_check_mark: Gotcha! ${userToUnban} has been unbanned.`
     );
@@ -197,7 +197,7 @@ export const addRole = (
 
   const rMember =
     message.mentions.members.first() ||
-    message.guild?.members.cache.get(args[1]);
+    message.guild.members.cache.get(args[1]);
 
   if (!rMember) {
     const roleErrorNoUser = new Discord.MessageEmbed()
@@ -208,10 +208,8 @@ export const addRole = (
       );
     return message.channel.send(roleErrorNoUser);
   }
-
-  const roleToAdd = message.mentions.roles.first()
-    ? message.mentions.roles.first().id
-    : args[2];
+  const roleToAdd =
+    message.mentions.roles.first() || message.guild.roles.cache.get(args[2]);
   if (!roleToAdd) {
     const roleErrorNoRole = new Discord.MessageEmbed()
       .setTitle("Role Error")
@@ -266,7 +264,7 @@ export const removerole = (
 
   const rMember =
     message.mentions.members.first() ||
-    message.guild?.members.cache.get(args[1]);
+    message.guild.members.cache.get(args[1]);
 
   if (!rMember) {
     const roleErrorNoUser = new Discord.MessageEmbed()
@@ -278,9 +276,8 @@ export const removerole = (
     return message.channel.send(roleErrorNoUser);
   }
 
-  const roleToRemove = message.mentions.roles.first()
-    ? message.mentions.roles.first().id
-    : args[2];
+  const roleToRemove =
+    message.mentions.roles.first() || message.guild.roles.cache.get(args[2]);
   if (!roleToRemove) {
     const roleErrorNoRole = new Discord.MessageEmbed()
       .setTitle("Role Error")

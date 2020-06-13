@@ -5,7 +5,7 @@ export const clear = async (
   message: Discord.Message,
   args: any[]
 ) => {
-  if (!message.member?.hasPermission("MANAGE_MESSAGES")) {
+  if (!message.member.hasPermission("MANAGE_MESSAGES")) {
     const clearErrorNoPerms = new Discord.MessageEmbed()
       .setTitle("Clear Error")
       .setColor("#d91818")
@@ -44,7 +44,7 @@ export const clear = async (
       );
     return message.channel.send(clearErrorNonexistant);
   }
-  await message.channel
+  await message.channel.messages
     .fetch()
     .then((messages) => messages.filter((v) => v.author.id === userToClear.id));
   const clearEmbedUser = new Discord.MessageEmbed()

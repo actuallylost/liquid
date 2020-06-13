@@ -7,7 +7,7 @@ export const prefix = (
 ) => {
   const serverPrefixes = new Discord.Collection();
 
-  if (!message.member?.hasPermission("MANAGE_GUILD")) {
+  if (!message.member.hasPermission("MANAGE_GUILD")) {
     const prefixErrorNoPerms = new Discord.MessageEmbed()
       .setTitle("Prefix Error")
       .setColor("#d91818")
@@ -28,5 +28,5 @@ export const prefix = (
     return message.channel.send(prefixErrorNoInput);
   }
 
-  serverPrefixes.set(message.guild?.id, altPrefix);
+  serverPrefixes.set(message.guild.id, altPrefix);
 };

@@ -12,11 +12,14 @@ export const info = (
     .addField("ID:", message.author.id)
     .addField(
       "Roles:",
-      message.member?.roles.map((r) => `<@${r.id}>`).join(", ")
+      message.member.roles.map((r) => `<@${r.id}>`).join(", ")
     )
     .addField("Created at:", message.author.createdAt)
     .addField("Joined at", message.member?.joinedAt)
-    .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL())
+    .setFooter(
+      `Requested by ${message.author.tag}`,
+      message.author.avatarURL() || undefined
+    )
     .setTimestamp();
   return message.channel.send(infoEmbed);
 };
