@@ -1,4 +1,10 @@
-import { Client, ClientOptions, Collection, Message } from "discord.js";
+import {
+  Client,
+  ClientOptions,
+  ClientUser,
+  Collection,
+  Message,
+} from "discord.js";
 
 import { botPrefix } from "../env";
 import { Command } from "./Command";
@@ -11,9 +17,12 @@ export class ExtendedClient extends Client {
   readonly logger = createLogger("liquid");
   readonly commands = new Collection<string, Command>();
 
+  user!: ClientUser;
+
   constructor(options?: ClientOptions) {
     super(options);
     this.registerEventListeners();
+    this.logger.level = "silly";
   }
 
   /**
@@ -29,12 +38,13 @@ export class ExtendedClient extends Client {
   }
 
   protected registerEventListeners() {
-    this.on("debug", (msg) => this.logger.debug(msg))
+    this.on("debug", (msg) => this.logger.silly(msg))
       .on("warn", (msg) => this.logger.warn(msg))
       .on("error", (err) => {
         console.error(err);
         this.logger.error(err);
-      });
+      })
+      .on("ready", () => this.logger.info("Ready."));
 
     this.on("message", (m) => this.extractCommand(m));
 
@@ -47,26 +57,28 @@ export class ExtendedClient extends Client {
     }
 
     const args = m.content.slice(botPrefix.length).trim().split(" ");
-
     const command = this.commands.get(args[0]);
-    if (command) {
-      return command.run(m, args.slice(1));
-    } else {
-      this.logger.warn("Command not found: ", args[0]);
+
+    if (!command) {
+      this.logger.debug("Command not found: ", args[0]);
+      return;
     }
+
+    if (command.options.guildOnly && !m.guild) {
+      return;
+    }
+
+    this.logger.info(
+      `${m.author.tag} (${m.author.id}) => ${command.options.name} ${args
+        .slice(1)
+        .join(" ")}`
+    );
+
+    return command.run(m, args.slice(1)).catch((err) => {
+      this.logger.error(
+        `Error while running command '${command.options.name}':`
+      );
+      console.error(err);
+    });
   }
 }
-
-const ex = new ExtendedClient();
-
-class Test extends Command {
-  constructor(client: ExtendedClient) {
-    super(client, { name: "test", guildOnly: true });
-  }
-
-  async run(message: Message) {
-    message.reply("uwu");
-  }
-}
-
-ex.registerCommands(Test);

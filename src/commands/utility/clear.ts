@@ -1,73 +1,69 @@
 import * as Discord from "discord.js";
 
-export const clear = async (
-  client: Discord.Client,
-  message: Discord.Message,
-  args: string[]
-) => {
-  if (!message.member?.hasPermission("MANAGE_MESSAGES")) {
-    return message.channel.send(
-      new Discord.MessageEmbed()
-        .setTitle("Clear Error")
-        .setColor("#d91818")
-        .setDescription(
-          ":x: Oops! You don't have permissions to run this command."
-        )
-    );
+import { sendErrorEmbed } from "../../errors";
+import { ExtendedClient } from "../../lib/Client";
+import { Command } from "../../lib/Command";
+import { DefiniteGuildMessage } from "../../types/Command";
+
+export class Clear extends Command {
+  constructor(client: ExtendedClient) {
+    super(client, { name: "clear", guildOnly: true });
   }
 
-  if (!args[1]) {
-    const clearErrorNoAmount = new Discord.MessageEmbed()
-      .setTitle("Clear Error")
-      .setColor("#a80d0d")
-      .setDescription(
+  async run(message: DefiniteGuildMessage, args: string[]) {
+    if (!message.member.hasPermission("MANAGE_MESSAGES")) {
+      return sendErrorEmbed(
+        message.channel,
+        ":x: Oops! You don't have permissions to run this command."
+      );
+    }
+
+    if (!args[0]) {
+      return sendErrorEmbed(
+        message.channel,
         ":x: Oh noes! Looks like you haven't specified how many messages to clear. The format is `+clear <amount> [user]`."
       );
-    return message.channel.send(clearErrorNoAmount);
-  }
+    }
 
-  const messagesToDelete = parseInt(args[1], 10);
-  if (isNaN(messagesToDelete)) {
-    const clearErrorNaN = new Discord.MessageEmbed()
-      .setTitle("Clear Error")
-      .setColor("#a80d0d")
-      .setDescription(
+    const messagesToDelete = parseInt(args[0], 10);
+    if (isNaN(messagesToDelete)) {
+      return sendErrorEmbed(
+        message.channel,
         ":x: Oh noes! Looks like you haven't input a number. The format is `+clear <amount> [user]`."
       );
-    return message.channel.send(clearErrorNaN);
-  }
+    }
 
-  const userToClear = message.mentions.members?.first();
-  if (!userToClear) {
-    const clearErrorNonexistant = new Discord.MessageEmbed()
-      .setTitle("Clear Error")
-      .setColor("#d91818")
-      .setDescription(
+    const userToClear = message.mentions.members?.first();
+    if (!userToClear) {
+      return sendErrorEmbed(
+        message.channel,
         ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+clear <amount> [user]`."
       );
-    return message.channel.send(clearErrorNonexistant);
+    }
+
+    await message.channel.messages
+      .fetch()
+      .then((messages) =>
+        messages.filter((v) => v.author.id === userToClear.id)
+      );
+
+    // User Clear -
+    const clearEmbedUser = new Discord.MessageEmbed()
+      .setTitle("Clear Successful")
+      .setColor("#2bd642")
+      .setDescription(
+        `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`
+      );
+    message.channel.send(clearEmbedUser);
+
+    // Non-User Clear -
+    message.channel.bulkDelete(messagesToDelete);
+    const clearEmbed = new Discord.MessageEmbed()
+      .setTitle("Clear Successful")
+      .setColor("#2bd642")
+      .setDescription(
+        `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} messages.`
+      );
+    return message.channel.send(clearEmbed);
   }
-
-  await message.channel.messages
-    .fetch()
-    .then((messages) => messages.filter((v) => v.author.id === userToClear.id));
-
-  // User Clear -
-  const clearEmbedUser = new Discord.MessageEmbed()
-    .setTitle("Clear Successful")
-    .setColor("#2bd642")
-    .setDescription(
-      `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`
-    );
-  message.channel.send(clearEmbedUser);
-
-  // Non-User Clear -
-  message.channel.bulkDelete(messagesToDelete);
-  const clearEmbed = new Discord.MessageEmbed()
-    .setTitle("Clear Successful")
-    .setColor("#2bd642")
-    .setDescription(
-      `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} messages.`
-    );
-  return message.channel.send(clearEmbed);
-};
+}

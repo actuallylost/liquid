@@ -1,31 +1,34 @@
 import * as Discord from "discord.js";
 
-import { ownerID } from "../env";
+import { ownerID } from "../../env";
+import { sendErrorEmbed } from "../../errors";
+import { ExtendedClient } from "../../lib/Client";
+import { Command } from "../../lib/Command";
+import { DefiniteGuildMessage } from "../../types/Command";
 
-export const say = (
-  client: Discord.Client,
-  message: Discord.Message,
-  args: string[]
-) => {
-  if (message.author.id !== ownerID) {
-    const sayEmbed = new Discord.MessageEmbed()
-      .setTitle("Say Error")
-      .setColor("#d91818")
-      .setDescription(
+export class say extends Command {
+  constructor(client: ExtendedClient) {
+    super(client, { name: "say", guildOnly: true });
+  }
+
+  /**
+   * Sends a message that a user provides.
+   */
+  async run(message: DefiniteGuildMessage, args: string[]) {
+    if (message.author.id !== ownerID) {
+      return sendErrorEmbed(
+        message.channel,
         ":x: Sorry, you have to be the bot owner to use this command!"
       );
-    return message.channel.send(sayEmbed);
-  }
-  if (!args[1]) {
-    const errorEmbed = new Discord.MessageEmbed()
-      .setTitle("Clear Error")
-      .setColor("#a80d0d")
-      .setDescription(
+    }
+    if (args.length < 1) {
+      return sendErrorEmbed(
+        message.channel,
         ":x: Oh noes! Looks like you haven't specified what message to send. The format is `+say <message>`."
       );
-    return message.channel.send(errorEmbed);
-  }
+    }
 
-  message.delete({ timeout: 400 }).catch((err) => null);
-  message.channel.send(args.join(" "));
-};
+    message.delete({ timeout: 400 }).catch((err) => null);
+    message.channel.send(args.join(" "));
+  }
+}
