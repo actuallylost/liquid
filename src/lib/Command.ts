@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Guild, GuildMember, Message, TextChannel } from "discord.js";
 
 import { ExtendedClient } from "./Client";
 
@@ -28,3 +28,9 @@ export abstract class Command {
     return this.client.logger;
   }
 }
+
+export type DefiniteGuildMessage = Message & {
+  guild: Guild;
+  member: GuildMember;
+  channel: TextChannel;
+};

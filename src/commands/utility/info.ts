@@ -1,10 +1,8 @@
 import * as Discord from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
-import { DefiniteGuildMessage } from "../../types/Command";
-
-import { Command } from "../../lib/Command";
 import { ExtendedClient } from "../../lib/Client";
+import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class info extends Command {
   constructor(client: ExtendedClient) {

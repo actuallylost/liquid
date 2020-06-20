@@ -2,8 +2,7 @@ import { MessageEmbed } from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
-import { Command } from "../../lib/Command";
-import { DefiniteGuildMessage } from "../../types/Command";
+import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class ServerLock extends Command {
   constructor(client: ExtendedClient) {
@@ -16,6 +15,31 @@ export class ServerLock extends Command {
         message.channel,
         ":x: Oops! You don't have permissions to run this command."
       );
+    }
+    if (!message.guild.roles.everyone.permissions.has("SEND_MESSAGES")) {
+      const unlockEmbed = new MessageEmbed()
+        .setTitle(`Server Unlocked`)
+        .setColor("#d91818")
+        .setDescription(
+          `:white_check_mark: Issue has been handled, you can now chat again.`
+        );
+      await message.guild.roles.everyone.setPermissions(["SEND_MESSAGES"]);
+      message.channel.send(unlockEmbed);
+    } else {
+      const lockEmbed = new MessageEmbed()
+        .setTitle(`Server Locked`)
+        .setColor("#d91818")
+        .setDescription(
+          `:white_check_mark: Please wait while our Staff Team handles the issue.`
+        );
+      const update = message.guild.roles.everyone.permissions.remove(
+        "SEND_MESSAGES"
+      );
+      console.log(
+        message.guild.roles.everyone.permissions.has("SEND_MESSAGES")
+      );
+      await message.guild.roles.everyone.setPermissions(update);
+      return message.channel.send(lockEmbed);
     }
   }
 }

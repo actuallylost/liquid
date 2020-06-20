@@ -2,8 +2,7 @@ import { Client, Message, MessageEmbed } from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
-import { Command } from "../../lib/Command";
-import { DefiniteGuildMessage } from "../../types/Command";
+import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class kick extends Command {
   constructor(client: ExtendedClient) {

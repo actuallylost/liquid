@@ -2,8 +2,7 @@ import { MessageEmbed, TextChannel } from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
-import { Command } from "../../lib/Command";
-import { DefiniteGuildMessage } from "../../types/Command";
+import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class support extends Command {
   constructor(client: ExtendedClient) {

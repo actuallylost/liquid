@@ -3,8 +3,7 @@ import * as Discord from "discord.js";
 import { ownerID } from "../../env";
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
-import { Command } from "../../lib/Command";
-import { DefiniteGuildMessage } from "../../types/Command";
+import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class say extends Command {
   constructor(client: ExtendedClient) {
