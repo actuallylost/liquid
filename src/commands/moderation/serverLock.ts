@@ -22,7 +22,9 @@ export class ServerLock extends Command {
         .setColor("#d91818")
         .setDescription(
           `:white_check_mark: Issue has been handled, you can now chat again.`
-        );
+        )
+        .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+        .setTimestamp();
       await message.guild.roles.everyone.setPermissions(["SEND_MESSAGES"]);
       message.channel.send(unlockEmbed);
     } else {
@@ -31,7 +33,9 @@ export class ServerLock extends Command {
         .setColor("#d91818")
         .setDescription(
           `:white_check_mark: Please wait while our Staff Team handles the issue.`
-        );
+        )
+        .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+        .setTimestamp();
       const update = message.guild.roles.everyone.permissions.remove(
         "SEND_MESSAGES"
       );

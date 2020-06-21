@@ -55,6 +55,9 @@ client
           "Timed out. Please run the `+reverify` command to reverify."
         );
       });
+  })
+  .on("guildBanAdd", () => {
+
   });
 
 client.login(token);

@@ -1,4 +1,4 @@
-import * as Discord from "discord.js";
+import { MessageEmbed, TextChannel } from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
@@ -10,14 +10,14 @@ export class suggest extends Command {
   }
 
   async run(message: DefiniteGuildMessage, args: string[]) {
-    const suggestion = args[0];
+    const suggestion = args.slice(1).join(" ");
     if (!suggestion) {
       return message.channel.send(
         ":x: Oops! It seems like you forgot to input a suggestion. Format is `+suggest <suggestion>`."
       );
     }
 
-    const suggestionEmbed = new Discord.MessageEmbed()
+    const suggestionEmbed = new MessageEmbed()
       .setTitle("Suggestion »")
       .setColor("#c91010")
       .addField(
@@ -31,7 +31,7 @@ export class suggest extends Command {
       .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
       .setTimestamp();
 
-    const confirmEmbed = new Discord.MessageEmbed()
+    const confirmEmbed = new MessageEmbed()
       .setColor("#03bc22")
       .addField(
         "Success!",
@@ -43,7 +43,7 @@ export class suggest extends Command {
     message.delete({ timeout: 400 }).catch((err) => null);
     message.author.send(confirmEmbed);
     return (message.guild?.channels.cache.get(
-      "629050929064312852"
-    ) as Discord.TextChannel).send(suggestionEmbed);
+      "724252807473004564"
+    ) as TextChannel).send(suggestionEmbed);
   }
 }
