@@ -6,7 +6,11 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class announce extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "announce", guildOnly: true });
+    super(client, {
+      name: "announce",
+      guildOnly: true,
+      description: "Announces a message in a specified channel.",
+    });
   }
 
   /**

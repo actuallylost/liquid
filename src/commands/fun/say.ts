@@ -7,7 +7,11 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class say extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "say", guildOnly: true });
+    super(client, {
+      name: "say",
+      guildOnly: true,
+      description: "[DEVELOPER ONLY] Makes the bot say a specified message.",
+    });
   }
 
   /**

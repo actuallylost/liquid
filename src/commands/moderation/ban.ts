@@ -6,7 +6,11 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class ban extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "ban", guildOnly: true });
+    super(client, {
+      name: "ban",
+      guildOnly: true,
+      description: "Bans a specified user.",
+    });
   }
 
   /**
@@ -51,22 +55,37 @@ export class ban extends Command {
 
     const reason = args[2];
 
-    const banEmbedReason = new MessageEmbed()
+    const banReason = new MessageEmbed()
       .setTitle(`${userToBan.user.username} was successfully banned`)
       .setColor("#2bd642")
       .setDescription(
         `:white_check_mark: Gotcha! ${userToBan} has been banned${
           reason ? ` for reason ${reason}` : ""
         }.`
-      );
+      )
+      .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+      .setTimestamp();
+
+    const banDM = new MessageEmbed()
+      .setTitle(`You have been banned from ${message.guild}`)
+      .setColor("#2bd642")
+      .addField(`Reason: `, reason)
+      .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+      .setTimestamp();
+
+    userToBan.send(banDM);
     userToBan.ban({ reason });
-    return message.channel.send(banEmbedReason);
+    return message.channel.send(banReason);
   }
 }
 
 export class unban extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "unban", guildOnly: true });
+    super(client, {
+      name: "unban",
+      guildOnly: true,
+      description: "Unbans a specified user.",
+    });
   }
 
   /**

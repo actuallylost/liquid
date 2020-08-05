@@ -7,7 +7,11 @@ import { isNumber, isUndefined } from "util";
 
 export class slowmode extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "slowmode", guildOnly: true });
+    super(client, {
+      name: "slowmode",
+      guildOnly: true,
+      description: "Enables, disables, or modifies the current slowmode.",
+    });
   }
 
   /**

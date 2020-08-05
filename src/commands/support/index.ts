@@ -1,2 +1,2 @@
 export * from "./suggest";
-export * from "./support";
+export * from "./report";

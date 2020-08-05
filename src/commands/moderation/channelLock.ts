@@ -6,7 +6,11 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class ChannelLock extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "clock", guildOnly: true });
+    super(client, {
+      name: "clock",
+      guildOnly: true,
+      description: "Locks or unlocks a channel.",
+    });
   }
 
   async run(message: DefiniteGuildMessage, args: string[]) {

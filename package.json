@@ -1,23 +1,28 @@
 {
-  "name": "liquid",
-  "version": "0.9.2",
-  "description": "",
-  "main": "src/index.ts",
-  "scripts": {
-    "start": "ts-node src"
-  },
-  "keywords": [],
-  "author": "lost the cutie",
-  "license": "ISC",
-  "dependencies": {
-    "chalk": "^4.1.0",
-    "discord.js": "^12.2.0",
-    "moment": "^2..1",
-    "winston": "^3.2.1",
-    "yarn": "^1.22.0"
-  },
-  "devDependencies": {
-    "@types/node": "^12.6.2",
-    "typescript": "^3.9.5"
-  }
+    "name": "liquid",
+    "version": "0.10.0",
+    "description": "",
+    "main": "src/index.ts",
+    "scripts": {
+        "start": "ts-node src"
+    },
+    "keywords": [],
+    "author": "lost the cutie",
+    "license": "ISC",
+    "dependencies": {
+        "chalk": "^4.1.0",
+        "discord.js": "^12.2.0",
+        "moment": "^2..1",
+        "pg": "^8.3.0",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.2.25",
+        "winston": "^3.2.1",
+        "yarn": "^1.22.0"
+    },
+    "devDependencies": {
+        "@types/node": "^14.0.22",
+        "prettier": "^2.0.5",
+        "ts-node": "^8.10.2",
+        "typescript": "^3.9.5"
+    }
 }

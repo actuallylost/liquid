@@ -8,6 +8,7 @@ interface BaseCommandOptions {
 
 interface CommandOptions extends BaseCommandOptions {
   guildOnly?: boolean;
+  description: string;
 }
 
 /**

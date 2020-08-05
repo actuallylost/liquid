@@ -6,7 +6,11 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class BotInfo extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "botinfo", guildOnly: true });
+    super(client, {
+      name: "botinfo",
+      guildOnly: true,
+      description: "Provides relative information about the bot.",
+    });
   }
 
   padUptime = (s: number) => {

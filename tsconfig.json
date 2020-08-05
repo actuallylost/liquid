@@ -6,6 +6,8 @@
 
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
 
     "outDir": "dist"
   },

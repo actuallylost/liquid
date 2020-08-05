@@ -6,7 +6,11 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class hug extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "hug", guildOnly: true });
+    super(client, {
+      name: "hug",
+      guildOnly: true,
+      description: "Hugs a specified user.",
+    });
   }
 
   async run(message: DefiniteGuildMessage, args: string[]) {

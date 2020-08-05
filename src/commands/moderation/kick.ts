@@ -6,7 +6,11 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class kick extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "kick", guildOnly: true });
+    super(client, {
+      name: "kick",
+      guildOnly: true,
+      description: "Kicks a user.",
+    });
   }
 
   /**
@@ -19,7 +23,9 @@ export class kick extends Command {
         .setColor("#d91818")
         .setDescription(
           ":x: Oops! You don't have permissions to run this command."
-        );
+        )
+        .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+        .setTimestamp();
       return message.channel.send(kickErrorNoPerms);
     }
 
@@ -29,7 +35,9 @@ export class kick extends Command {
         .setColor("#d91818")
         .setDescription(
           ":x: Oops! It seems like you forgot to input a user to kick. Format is `+kick <user> [reason]`."
-        );
+        )
+        .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+        .setTimestamp();
       return message.channel.send(kickErrorNoUser);
     }
 
@@ -41,7 +49,9 @@ export class kick extends Command {
         .setColor("#d91818")
         .setDescription(
           ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+kick <user> [reason]`."
-        );
+        )
+        .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+        .setTimestamp();
       return message.channel.send(kickErrorNonexistant);
     }
 
@@ -49,7 +59,9 @@ export class kick extends Command {
       const kickErrorSelf = new MessageEmbed()
         .setTitle("Kick Error")
         .setColor("#d91818")
-        .setDescription(":x: Oops! You cannot kick yourself dummy!");
+        .setDescription(":x: Oops! You cannot kick yourself dummy!")
+        .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+        .setTimestamp();
       return message.channel.send(kickErrorSelf);
     }
 
@@ -57,7 +69,9 @@ export class kick extends Command {
       const kickErrorKickable = new MessageEmbed()
         .setTitle("Kick Error")
         .setColor("#d91818")
-        .setDescription(":x: Oops! That user is not able to be kicked.");
+        .setDescription(":x: Oops! That user is not able to be kicked.")
+        .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+        .setTimestamp();
       return message.channel.send(kickErrorKickable);
     }
 
@@ -68,7 +82,9 @@ export class kick extends Command {
         .setColor("#2bd642")
         .setDescription(
           `:white_check_mark: Gotcha! ${userToKick} has been kicked.`
-        );
+        )
+        .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+        .setTimestamp();
       userToKick.kick();
       return message.channel.send(kickEmbedNoReason);
     }
@@ -78,7 +94,18 @@ export class kick extends Command {
       .setColor("#2bd642")
       .setDescription(
         `:white_check_mark: Gotcha! ${userToKick} has been kicked for ${kickReason}.`
-      );
+      )
+      .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+      .setTimestamp();
+
+    const kickDM = new MessageEmbed()
+      .setTitle(`You have been kicked from ${message.guild}`)
+      .setColor("#2bd642")
+      .addField(`Reason: `, kickReason)
+      .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+      .setTimestamp();
+
+    userToKick.send(kickDM);
     userToKick.kick();
     return message.channel.send(kickEmbedReason);
   }

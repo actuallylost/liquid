@@ -6,7 +6,12 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class Clear extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "clear", guildOnly: true });
+    super(client, {
+      name: "clear",
+      guildOnly: true,
+      description:
+        "Clears an amount of messages in a channel, or messages of a specified user.",
+    });
   }
 
   async run(message: DefiniteGuildMessage, args: string[]) {
@@ -46,15 +51,6 @@ export class Clear extends Command {
         messages.filter((v) => v.author.id === userToClear.id)
       );
 
-    // User Clear -
-    const clearEmbedUser = new Discord.MessageEmbed()
-      .setTitle("Clear Successful")
-      .setColor("#2bd642")
-      .setDescription(
-        `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`
-      );
-    message.channel.send(clearEmbedUser);
-
     // Non-User Clear -
     message.channel.bulkDelete(messagesToDelete);
     const clearEmbed = new Discord.MessageEmbed()
@@ -63,6 +59,15 @@ export class Clear extends Command {
       .setDescription(
         `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} messages.`
       );
-    return message.channel.send(clearEmbed);
+    message.channel.send(clearEmbed);
+
+    // User Clear -
+    const clearEmbedUser = new Discord.MessageEmbed()
+      .setTitle("Clear Successful")
+      .setColor("#2bd642")
+      .setDescription(
+        `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`
+      );
+    return message.channel.send(clearEmbedUser);
   }
 }

@@ -6,7 +6,11 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class addRole extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "addRole", guildOnly: true });
+    super(client, {
+      name: "addRole",
+      guildOnly: true,
+      description: "Adds a role a specified user.",
+    });
   }
 
   /**
@@ -82,7 +86,11 @@ export class addRole extends Command {
 
 export class removeRole extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "removeRole", guildOnly: true });
+    super(client, {
+      name: "removeRole",
+      guildOnly: true,
+      description: "Removes a role from a specified user.",
+    });
   }
 
   /**

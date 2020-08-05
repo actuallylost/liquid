@@ -6,7 +6,11 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class Avatar extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "avatar", guildOnly: true });
+    super(client, {
+      name: "avatar",
+      guildOnly: true,
+      description: "Provides the avatar of a specified user.",
+    });
   }
 
   async run(message: DefiniteGuildMessage, args: string[]) {

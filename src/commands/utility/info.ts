@@ -1,16 +1,19 @@
-import * as Discord from "discord.js";
+import { MessageEmbed } from "discord.js";
 
-import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class info extends Command {
   constructor(client: ExtendedClient) {
-    super(client, { name: "info", guildOnly: true });
+    super(client, {
+      name: "info",
+      guildOnly: true,
+      description: "Provides information about a user.",
+    });
   }
 
   async run(message: DefiniteGuildMessage, args: string[]) {
-    const infoEmbed = new Discord.MessageEmbed()
+    const infoEmbed = new MessageEmbed()
       .setTitle("User Information")
       .setColor("#4de8e8")
       .addField("User:", message.author.tag)
