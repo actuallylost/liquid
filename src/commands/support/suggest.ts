@@ -16,7 +16,7 @@ export class suggest extends Command {
     }
 
     async run(message: DefiniteGuildMessage, args: string[]) {
-        const suggestion = args.slice(1).join(" ");
+        const suggestion = args.slice().join(" ");
         if (!suggestion) {
             return sendErrorEmbed(
                 message.channel,

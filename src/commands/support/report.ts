@@ -5,10 +5,10 @@ import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
-export class report extends Command {
+export class issue extends Command {
     constructor(client: ExtendedClient) {
         super(client, {
-            name: "report",
+            name: "issue",
             guildOnly: true,
             description: "Allows the user to report an issue with Liquid.",
         });
@@ -19,7 +19,7 @@ export class report extends Command {
         if (!issueReason) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you forgot to input an issue. Format is `+report <issue>`."
+                ":x: Oops! It seems like you forgot to input an issue. Format is `+issue <issue>`."
             );
         }
 
