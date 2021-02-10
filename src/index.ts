@@ -10,13 +10,15 @@ import { token } from "./env";
 // ExtendedClient -
 import { ExtendedClient } from "./lib/Client";
 
-export const client = new ExtendedClient();
+const client = new ExtendedClient();
 
 client.registerCommands(...Object.values(commands));
 
 client
     .on("ready", () => {
-        client.user.setStatus("dnd");
+        client.user.setActivity(`${client.guilds.cache.size} guilds.`, {
+            type: "WATCHING",
+        });
     })
     .on("guildMemberAdd", async (member) => {
         member.roles.add("710574809951764491");
@@ -64,5 +66,4 @@ client
                 );
             });
     });
-
 client.login(token);

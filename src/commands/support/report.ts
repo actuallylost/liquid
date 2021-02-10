@@ -23,6 +23,12 @@ export class issue extends Command {
             );
         }
 
+        if (!this.client.guilds.cache.get("696042568525283467")) {
+            return console.log(
+                "[Report.ts] Guild cannot be Fetched from cache."
+            );
+        }
+
         const issueEmbed = new MessageEmbed()
             .setTitle("Issue »")
             .setColor("#c91010")
@@ -53,8 +59,10 @@ export class issue extends Command {
 
         message.delete({ timeout: 400 }).catch((err) => null);
         message.author.send(confirmEmbed);
-        return (message.guild.channels.cache.get(
-            "724252818688704582"
-        ) as TextChannel).send(issueEmbed);
+        return (this.client.guilds.cache
+            .get("696042568525283467")
+            ?.channels.cache.get("724252818688704582") as TextChannel).send(
+            issueEmbed
+        );
     }
 }
