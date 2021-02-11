@@ -39,36 +39,43 @@ export class Clear extends Command {
 
         const userToClear = message.mentions.members?.first();
 
+        // Non-User Clear -
+
         if (!userToClear) {
-            return sendErrorEmbed(
-                message.channel,
-                ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+clear <amount> [user]`."
-            );
+            message.channel.bulkDelete(messagesToDelete + 1);
+
+            const clearEmbed = new Discord.MessageEmbed()
+                .setTitle("Clear Successful")
+                .setColor("#2bd642")
+                .setDescription(
+                    `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} messages.`
+                );
+            message.channel.send(clearEmbed);
+        } else {
+            message.channel.bulkDelete(messagesToDelete + 1);
+
+            await message.channel.messages
+                .fetch()
+                .then((messages) =>
+                    messages.filter((v) => v.author.id === userToClear.id)
+                );
+
+            const clearEmbedUser = new Discord.MessageEmbed()
+                .setTitle("Clear Successful")
+                .setColor("#2bd642")
+                .setDescription(
+                    `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`
+                );
+            return message.channel.send(clearEmbedUser);
         }
 
-        await message.channel.messages
-            .fetch()
-            .then((messages) =>
-                messages.filter((v) => v.author.id === userToClear.id)
-            );
-
-        // Non-User Clear -
-        message.channel.bulkDelete(messagesToDelete);
-        const clearEmbed = new Discord.MessageEmbed()
-            .setTitle("Clear Successful")
-            .setColor("#2bd642")
-            .setDescription(
-                `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} messages.`
-            );
-        message.channel.send(clearEmbed);
-
         // User Clear -
-        const clearEmbedUser = new Discord.MessageEmbed()
-            .setTitle("Clear Successful")
-            .setColor("#2bd642")
-            .setDescription(
-                `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`
-            );
-        return message.channel.send(clearEmbedUser);
+
+        // if (userToClear) {
+        //     return sendErrorEmbed(
+        //         message.channel,
+        //         ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+clear <amount> [user]`."
+        //     );
+        // }
     }
 }
