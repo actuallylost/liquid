@@ -3,14 +3,24 @@ import "reflect-metadata";
 
 // Commands -
 import * as commands from "./commands";
+
 // Events -
 import * as events from "./events";
+import {
+    actEvents,
+    memberEvents,
+    msgEvents,
+    guildEvents,
+    voiceEvents,
+} from "./events";
+
 // Token -
 import { token } from "./env";
+
 // ExtendedClient -
 import { ExtendedClient } from "./lib/Client";
 
-const client = new ExtendedClient();
+export const client = new ExtendedClient();
 
 client.registerCommands(...Object.values(commands));
 
@@ -19,6 +29,15 @@ client
         client.user.setActivity(`${client.guilds.cache.size} guilds.`, {
             type: "WATCHING",
         });
+
+        /**
+         * Calls events.
+         */
+        actEvents(client);
+        guildEvents(client);
+        memberEvents(client);
+        msgEvents(client);
+        voiceEvents(client);
     })
     .on("guildMemberAdd", async (member) => {
         member.roles.add("710574809951764491");

@@ -39,9 +39,8 @@ export class Clear extends Command {
 
         const userToClear = message.mentions.members?.first();
 
-        // Non-User Clear -
-
         if (!userToClear) {
+            // Non-User Clear -
             message.channel.bulkDelete(messagesToDelete + 1);
 
             const clearEmbed = new Discord.MessageEmbed()
@@ -52,6 +51,7 @@ export class Clear extends Command {
                 );
             message.channel.send(clearEmbed);
         } else {
+            // User Clear -
             message.channel.bulkDelete(messagesToDelete + 1);
 
             await message.channel.messages

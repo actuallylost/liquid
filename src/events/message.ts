@@ -1,23 +1,83 @@
 import * as Discord from "discord.js";
 
-import { ExtendedClient } from "../lib/Client";
-import { DefiniteGuildMessage } from "../lib/Command";
-import { client } from "../index";
+import { MessageEmbed, TextChannel } from "discord.js";
 
-// client.on("message", (message) => {
-//    if (!message.guild) {
-//        return;
-//    }
-//    console.log("test 0 works");
-//
-//    const logChannel = message.guild.channels.cache.get("741247035864383538");
-//
-//    if (!logChannel || !(logChannel instanceof Discord.DMChannel)) {
-//        return;
-//    }
-//    console.log("test 1 works");
-//    message.channel.send(
-//        `\`[${message.createdAt}]\` ${message.author} (\`${message.author.id}\`) sent \`${message.content}\` in **${message.guild}** (\`${message.guild.id}\`)`
-//    );
-//    console.log("test 2 works");
-// });
+import { ExtendedClient } from "../lib/Client";
+
+export const msgEvents = (client: ExtendedClient) => {
+    const logChannel = client.channels.cache.get("817296242169741334");
+
+    if (!logChannel) {
+        return;
+    }
+
+    client
+        .on("messageUpdate", (oldMessage, newMessage) => {
+            if (!oldMessage.guild || !newMessage.guild) {
+                return;
+            }
+
+            if (!oldMessage.author || !newMessage.author) {
+                return;
+            }
+
+            if (oldMessage.content === newMessage.content) {
+                return;
+            }
+
+            if (oldMessage.author.bot) {
+                return;
+            }
+
+            const editEmbed = new MessageEmbed()
+                .setTitle(`Message Edited (User: ${oldMessage.author.id})`)
+                .setColor("#A803A8")
+                .addField("From »", oldMessage.content, true)
+                .addField("To »", newMessage.content, true)
+                .setFooter(
+                    `${oldMessage.author.username}`,
+                    oldMessage.author.avatarURL() || undefined
+                )
+                .setTimestamp();
+
+            return (logChannel as TextChannel).send(editEmbed);
+            // return (logChannel as TextChannel).send(
+            //    `\`[${newMessage.createdAt}]\` ${oldMessage.author.tag} (\`${oldMessage.author.id}\`) edited a message in **${oldMessage.channel}** \n **From »** \`${oldMessage.content}\` \n **To »** \`${newMessage.content}\``
+            //);
+        })
+        .on("messageDelete", (message) => {
+            if (!message.guild) {
+                return;
+            }
+
+            if (!message.author) {
+                return;
+            }
+
+            if (message.author.bot) {
+                return;
+            }
+
+            return (logChannel as TextChannel).send(
+                `Message was deleted with content ${message.content}`
+            );
+        });
+
+    // client.on("message", (message: Discord.Message) => {
+    //     if (message.author.bot) {
+    //         return;
+    //     }
+
+    //     if (!message.guild) {
+    //         return;
+    //     }
+
+    //     const messageEmbed = new MessageEmbed()
+    //         .setAuthor(`${message.author.tag} (${message.author.id})`)
+    //         .addField("Message:", `\`${message.content}\``);
+
+    //     return (logChannel as TextChannel).send(messageEmbed);
+
+    //     // `\`[${message.createdAt.}]\` ${message.author.tag} (\`${message.author.id}\`) sent \`${message.content}\` in **${message.guild}** (\`${message.guild.id}\`)`
+    // });
+};

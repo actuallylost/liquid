@@ -16,17 +16,16 @@ export class issue extends Command {
 
     async run(message: DefiniteGuildMessage, args: string[]) {
         const issueReason = args.slice().join(" ");
+        let uwuPrefix = this.client.guildPrefixCache.get(message.guild.id);
         if (!issueReason) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you forgot to input an issue. Format is `+issue <issue>`."
+                `:x: Oops! It seems like you forgot to input an issue. Format is \`${uwuPrefix}issue <issue>\`.`
             );
         }
 
         if (!this.client.guilds.cache.get("696042568525283467")) {
-            return console.log(
-                "[Report.ts] Guild cannot be Fetched from cache."
-            );
+            return console.log("[Report.ts] Cannot fetch Guild from cache.");
         }
 
         const issueEmbed = new MessageEmbed()
@@ -43,6 +42,7 @@ export class issue extends Command {
 
         const repo = this.client.connection.getRepository(Issue);
         const storedIssue = new Issue();
+
         storedIssue.content = issueReason;
         await repo.save(storedIssue);
 

@@ -5,8 +5,8 @@ export class Suggestion {
     @PrimaryGeneratedColumn()
     case!: number;
 
-    @PrimaryColumn()
-    id!: number;
+    // @PrimaryColumn()
+    // id!: number;
 
     @PrimaryColumn()
     guild_id!: string;
