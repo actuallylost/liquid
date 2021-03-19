@@ -5,10 +5,10 @@ import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
-export class report extends Command {
+export class issue extends Command {
     constructor(client: ExtendedClient) {
         super(client, {
-            name: "report",
+            name: "issue",
             guildOnly: true,
             description: "Allows the user to report an issue with Liquid.",
         });
@@ -16,11 +16,16 @@ export class report extends Command {
 
     async run(message: DefiniteGuildMessage, args: string[]) {
         const issueReason = args.slice().join(" ");
+        let uwuPrefix = this.client.guildPrefixCache.get(message.guild.id);
         if (!issueReason) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you forgot to input an issue. Format is `+report <issue>`."
+                `:x: Oops! It seems like you forgot to input an issue. Format is \`${uwuPrefix}issue <issue>\`.`
             );
+        }
+
+        if (!this.client.guilds.cache.get("696042568525283467")) {
+            return console.log("[Report.ts] Cannot fetch Guild from cache.");
         }
 
         const issueEmbed = new MessageEmbed()
@@ -37,6 +42,7 @@ export class report extends Command {
 
         const repo = this.client.connection.getRepository(Issue);
         const storedIssue = new Issue();
+
         storedIssue.content = issueReason;
         await repo.save(storedIssue);
 
@@ -53,8 +59,10 @@ export class report extends Command {
 
         message.delete({ timeout: 400 }).catch((err) => null);
         message.author.send(confirmEmbed);
-        return (message.guild.channels.cache.get(
-            "724252818688704582"
-        ) as TextChannel).send(issueEmbed);
+        return (this.client.guilds.cache
+            .get("696042568525283467")
+            ?.channels.cache.get("724252818688704582") as TextChannel).send(
+            issueEmbed
+        );
     }
 }

@@ -7,6 +7,7 @@ import {
     DiscordAPIError,
 } from "discord.js";
 import { Connection, createConnection } from "typeorm";
+import { Levels } from "../entities/Levels";
 
 import { ServerPrefix } from "../entities/ServerPrefix";
 import { botPrefix } from "../env";
@@ -57,7 +58,41 @@ export class ExtendedClient extends Client {
             })
             .on("ready", () => this.logger.info("Ready."));
 
+        this.on("messageUpdate", (muo, mun: any) => this.extractCommand(mun));
         this.on("message", (m) => this.extractCommand(m));
+
+        /**
+         * Do the below thing later
+         */
+
+        // this.on("message", async (msg) => {
+        //     if (!msg.guild) return;
+
+        //     // Call Database -
+
+        //     const repo = this.connection.getRepository(Levels);
+        //     const levelsLogic = new Levels();
+        //     levelsLogic.userID = msg.author.id;
+        //     levelsLogic.guildID = msg.guild.id;
+        //     levelsLogic.xp =
+        //         levelsLogic.xp + Math.floor(Math.random() * 13) + 1;
+        //     levelsLogic.level = levelsLogic.level;
+
+        //     // Level logic -
+
+        //     let requiredXP =
+        //         5 * (levelsLogic.level ^ 2) +
+        //         50 * levelsLogic.level +
+        //         100 -
+        //         levelsLogic.xp;
+        //     if (levelsLogic.xp >= requiredXP) {
+        //         levelsLogic.level = levelsLogic.level + 1;
+        //     }
+
+        //     // Save data to database -
+
+        //     await repo.save(levelsLogic);
+        // });
 
         this.logger.verbose("Attached event listeners");
     }
@@ -79,6 +114,7 @@ export class ExtendedClient extends Client {
             if (retrievedPrefix) {
                 prefix = retrievedPrefix.prefix;
             }
+            this.guildPrefixCache.set(m.guild.id, prefix);
         }
 
         if (!m.content.startsWith(prefix)) {

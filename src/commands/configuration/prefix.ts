@@ -43,6 +43,7 @@ export class Prefix extends Command {
         await repo.save(storedPrefix);
 
         this.client.guildPrefixCache.set(message.guild.id, args[0]);
+
         const prefixEmbed = new Discord.MessageEmbed()
             .setTitle("Prefix Set")
             .setColor("#2bd642")

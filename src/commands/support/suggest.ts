@@ -16,7 +16,7 @@ export class suggest extends Command {
     }
 
     async run(message: DefiniteGuildMessage, args: string[]) {
-        const suggestion = args.slice(1).join(" ");
+        const suggestion = args.slice().join(" ");
         if (!suggestion) {
             return sendErrorEmbed(
                 message.channel,
@@ -34,30 +34,35 @@ export class suggest extends Command {
             .addField("Server »", message.guild)
             .addField("Channel »", message.channel)
             .addField("Time »", message.createdAt)
-            .addField("Suggestion »", suggestion)
-            .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
-            .setTimestamp();
+            .addField("Suggestion »", suggestion);
 
         const repo = this.client.connection.getRepository(Suggestion);
         const storedSuggestion = new Suggestion();
         storedSuggestion.content = suggestion;
+        storedSuggestion.channel_id = message.channel.id;
+        storedSuggestion.guild_id = message.channel.guild.id;
+        storedSuggestion.message_id = message.id;
+        storedSuggestion.submitter_id = message.author.id;
+        // storedSuggestion.id = storedSuggestion.case;
 
         await repo.save(storedSuggestion);
 
-        suggestionEmbed.addField("ID »", storedSuggestion.id);
+        suggestionEmbed
+            .setFooter(`Suggestion ID: #${storedSuggestion.case}`)
+            .setTimestamp();
 
         const confirmEmbed = new MessageEmbed()
             .setColor("#03bc22")
             .addField(
                 "Success!",
-                `:white_check_mark: Suggestion successfully submitted, the developer will review it as soon as possible!.`
+                `:white_check_mark: Suggestion successfully submitted, the developer will review it as soon as possible!`
             )
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
 
         message.delete({ timeout: 400 }).catch((err) => null);
         message.author.send(confirmEmbed);
-        return (message.guild?.channels.cache.get(
+        return (message.guild.channels.cache.get(
             "724252807473004564"
         ) as TextChannel).send(suggestionEmbed);
     }

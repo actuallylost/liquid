@@ -1,24 +1,43 @@
 // Database -
 import "reflect-metadata";
 
-import { Message, MessageEmbed } from "discord.js";
-
 // Commands -
 import * as commands from "./commands";
+
+// Events -
+import * as events from "./events";
+import {
+    actEvents,
+    memberEvents,
+    msgEvents,
+    guildEvents,
+    voiceEvents,
+} from "./events";
+
 // Token -
 import { token } from "./env";
+
 // ExtendedClient -
 import { ExtendedClient } from "./lib/Client";
 
-console.log("test");
-
-const client = new ExtendedClient();
+export const client = new ExtendedClient();
 
 client.registerCommands(...Object.values(commands));
 
 client
     .on("ready", () => {
-        client.user.setStatus("dnd");
+        client.user.setActivity(`${client.guilds.cache.size} guilds.`, {
+            type: "WATCHING",
+        });
+
+        /**
+         * Calls events.
+         */
+        actEvents(client);
+        guildEvents(client);
+        memberEvents(client);
+        msgEvents(client);
+        voiceEvents(client);
     })
     .on("guildMemberAdd", async (member) => {
         member.roles.add("710574809951764491");
@@ -56,8 +75,8 @@ client
                 member.send(
                     "Thanks for Verifying! You now have access to all of the server."
                 );
-                await member.roles.remove("634392381294116904");
-                await member.roles.add("614903485858578513");
+                // await member.roles.remove("634392381294116904");
+                // await member.roles.add("614903485858578513");
             })
             .catch((e) => {
                 client.logger.error(e);
@@ -66,5 +85,4 @@ client
                 );
             });
     });
-
 client.login(token);
