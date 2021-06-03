@@ -83,7 +83,9 @@ export const guildEvents = (client: ExtendedClient) => {
             }
 
             const channelUpdateEmbed = new MessageEmbed()
-                .setTitle(`Channel Updated ${(newChannel as TextChannel).name}`)
+                .setTitle(
+                    `Channel Updated <#${(newChannel as TextChannel).id}>`
+                )
                 .setColor("#A803A8")
                 .addField(
                     "Channel Before »",

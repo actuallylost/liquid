@@ -1,2 +1,2 @@
 export * from "./prefix";
-export * from "./config";
+export * from "./setting";
