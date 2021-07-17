@@ -3,14 +3,15 @@ import { MessageEmbed } from "discord.js";
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
-import { Warning } from "../../entities/Warning";
+import { Infraction } from "../../entities/Infraction";
+import { InfractionType } from "./InfractionTypes";
 
 export class warn extends Command {
     constructor(client: ExtendedClient) {
         super(client, {
             name: "warn",
             guildOnly: true,
-            description: "Warns a specific user ",
+            description: "Warns a specific user with a reason.",
         });
     }
 
@@ -25,7 +26,7 @@ export class warn extends Command {
             : message.mentions.members?.first();
 
         const prefix = this.client.guildPrefixCache.get(message.guild.id);
-        const reason = args[2];
+        const reason = args[1];
 
         if (!member) {
             return sendErrorEmbed(
@@ -48,9 +49,11 @@ export class warn extends Command {
             );
         }
 
-        const repo = this.client.connection.getRepository(Warning);
-        const storedWarning = new Warning();
-        storedWarning.user_id = member.id;
+        const repo = this.client.connection.getRepository(Infraction);
+        const storedWarning = new Infraction();
+        storedWarning.inf_type = InfractionType.WARN;
+        storedWarning.offender_id = member.id;
+        storedWarning.moderator_id = message.member.id;
         storedWarning.guild_id = message.guild.id;
         storedWarning.reason = reason;
         await repo.save(storedWarning);

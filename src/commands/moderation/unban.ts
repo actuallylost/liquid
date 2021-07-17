@@ -15,6 +15,7 @@ export class unban extends Command {
 
     /**
      * Unban a user.
+     * @param member Unbanned user.
      */
     async run(message: DefiniteGuildMessage, args: string[]) {
         const member = message.guild.members.cache.get(args[0])

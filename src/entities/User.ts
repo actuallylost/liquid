@@ -5,6 +5,6 @@ export class User {
     @PrimaryColumn()
     user_id!: string;
 
-    @Column()
-    punishments!: Array<string>;
+    // @Column()
+    // punishments!: Array<string>;
 }

@@ -3,7 +3,6 @@ import { MessageEmbed } from "discord.js";
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
-import { isNumber, isUndefined } from "util";
 
 export class slowmode extends Command {
     constructor(client: ExtendedClient) {
@@ -18,6 +17,8 @@ export class slowmode extends Command {
      * Enables slowmode in chat.
      */
     async run(message: DefiniteGuildMessage, args: string[]) {
+        const prefix = this.client.guildPrefixCache.get(message.guild.id);
+
         if (!message.member.hasPermission("MANAGE_CHANNELS")) {
             return sendErrorEmbed(
                 message.channel,
@@ -25,23 +26,23 @@ export class slowmode extends Command {
             );
         }
         const sTime = Number(args[0]);
-        if (isUndefined(sTime)) {
+        if (sTime == undefined) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you forgot to input the slowmode time. Format is `+slowmode <time>`."
+                `:x: Oops! It seems like you forgot to input the slowmode time. Format is \`${prefix}slowmode <time>\`.`
             );
         }
         if (isNaN(sTime)) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you did not input a number. Format is `+slowmode <time>`."
+                `:x: Oops! It seems like you did not input a number. Format is \`${prefix}slowmode <time>\`.`
             );
         }
 
         if (sTime > 21600) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you've input a number that exceeds the limit of **21600**. Format is `+slowmode <time>`."
+                `:x: Oops! It seems like you've input a number that exceeds the limit of **21600**. Format is \`${prefix}slowmode <time>\`.`
             );
         }
 

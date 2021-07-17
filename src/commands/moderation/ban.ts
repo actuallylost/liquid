@@ -1,8 +1,10 @@
 import { MessageEmbed } from "discord.js";
+import { Infraction } from "../../entities/Infraction";
 
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
+import { InfractionType } from "./InfractionTypes";
 
 export class ban extends Command {
     constructor(client: ExtendedClient) {
@@ -15,9 +17,16 @@ export class ban extends Command {
 
     /**
      * Ban a user.
+     * @param userToBan Banned user.
+     * @param reason Banning reason.
      */
     async run(message: DefiniteGuildMessage, args: string[]) {
+        const userToBan = message.guild.members.cache.get(args[0])
+            ? message.guild.members.cache.get(args[0])
+            : message.mentions.members?.first();
+
         const prefix = this.client.guildPrefixCache.get(message.guild.id);
+        const reason = args[2] || "None";
 
         if (!message.member.hasPermission("BAN_MEMBERS")) {
             return sendErrorEmbed(
@@ -33,7 +42,6 @@ export class ban extends Command {
             );
         }
 
-        const userToBan = message.mentions.members?.first();
         if (!userToBan) {
             return sendErrorEmbed(
                 message.channel,
@@ -44,7 +52,7 @@ export class ban extends Command {
         if (userToBan === message.member) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! You cannot ban yourself dummy!"
+                ":x: Oops! You cannot ban yourself!"
             );
         }
 
@@ -55,15 +63,11 @@ export class ban extends Command {
             );
         }
 
-        const reason = args[2];
-
         const banReason = new MessageEmbed()
             .setTitle(`${userToBan.user.username} was successfully banned`)
             .setColor("#2bd642")
             .setDescription(
-                `:white_check_mark: Gotcha! ${userToBan} has been banned${
-                    reason ? ` for reason ${reason}` : ""
-                }.`
+                `:white_check_mark: Gotcha! ${userToBan} has been banned for reason ${reason}.`
             )
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
@@ -74,6 +78,15 @@ export class ban extends Command {
             .addField(`Reason: `, reason)
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
+
+        const repo = this.client.connection.getRepository(Infraction);
+        const storedBan = new Infraction();
+        storedBan.inf_type = InfractionType.BAN;
+        storedBan.offender_id = userToBan.id;
+        storedBan.moderator_id = message.member.id;
+        storedBan.guild_id = message.guild.id;
+        storedBan.reason = reason;
+        await repo.save(storedBan);
 
         userToBan.send(banDM);
         userToBan.ban({ reason });

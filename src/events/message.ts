@@ -58,9 +58,17 @@ export const msgEvents = (client: ExtendedClient) => {
                 return;
             }
 
-            return (logChannel as TextChannel).send(
-                `Message was deleted with content ${message.content}`
-            );
+            const deleteEmbed = new MessageEmbed()
+                .setTitle(`Message Edited (User: ${message.author.id})`)
+                .setColor("#A803A8")
+                .addField("Content »", message.content, true)
+                .setFooter(
+                    `${message.author.username}`,
+                    message.author.avatarURL() || undefined
+                )
+                .setTimestamp();
+
+            return (logChannel as TextChannel).send(deleteEmbed);
         });
 
     // client.on("message", (message: Discord.Message) => {

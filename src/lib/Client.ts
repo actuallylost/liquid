@@ -7,7 +7,6 @@ import {
     DiscordAPIError,
 } from "discord.js";
 import { Connection, createConnection } from "typeorm";
-import { Levels } from "../entities/Levels";
 
 import { ServerPrefix } from "../entities/ServerPrefix";
 import { botPrefix } from "../env";
@@ -62,7 +61,7 @@ export class ExtendedClient extends Client {
         this.on("message", (m) => this.extractCommand(m));
 
         /**
-         * Do the below thing later
+         * TODO: Leveling system
          */
 
         // this.on("message", async (msg) => {
