@@ -17,11 +17,11 @@ export class ban extends Command {
 
     /**
      * Ban a user.
-     * @param userToBan Banned user.
+     * @param member Banned user.
      * @param reason Banning reason.
      */
     async run(message: DefiniteGuildMessage, args: string[]) {
-        const userToBan = message.guild.members.cache.get(args[0])
+        const member = message.guild.members.cache.get(args[0])
             ? message.guild.members.cache.get(args[0])
             : message.mentions.members?.first();
 
@@ -42,32 +42,32 @@ export class ban extends Command {
             );
         }
 
-        if (!userToBan) {
+        if (!member) {
             return sendErrorEmbed(
                 message.channel,
                 `:x: Oops! That user doesn't exist, maybe you typed something wrong? Format is \`${prefix}ban <user> [reason]\`.`
             );
         }
 
-        if (userToBan === message.member) {
+        if (member === message.member) {
             return sendErrorEmbed(
                 message.channel,
                 ":x: Oops! You cannot ban yourself!"
             );
         }
 
-        if (!userToBan.bannable) {
+        if (!member.bannable) {
             return sendErrorEmbed(
                 message.channel,
                 ":x: Oops! This user cannot be banned."
             );
         }
 
-        const banReason = new MessageEmbed()
-            .setTitle(`${userToBan.user.username} was successfully banned`)
+        const banEmbed = new MessageEmbed()
+            .setTitle(`${member.user.username} was successfully banned`)
             .setColor("#2bd642")
             .setDescription(
-                `:white_check_mark: Gotcha! ${userToBan} has been banned for reason ${reason}.`
+                `:white_check_mark: Gotcha! ${member} has been banned with reason ${reason}.`
             )
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
@@ -82,14 +82,14 @@ export class ban extends Command {
         const repo = this.client.connection.getRepository(Infraction);
         const storedBan = new Infraction();
         storedBan.inf_type = InfractionType.BAN;
-        storedBan.offender_id = userToBan.id;
+        storedBan.offender_id = member.id;
         storedBan.moderator_id = message.member.id;
         storedBan.guild_id = message.guild.id;
         storedBan.reason = reason;
         await repo.save(storedBan);
 
-        userToBan.send(banDM);
-        userToBan.ban({ reason });
-        return message.channel.send(banReason);
+        member.send(banDM);
+        member.ban({ reason });
+        return message.channel.send(banEmbed);
     }
 }

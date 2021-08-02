@@ -4,7 +4,6 @@ import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 import { Infraction } from "../../entities/Infraction";
-import { InfractionType } from "./InfractionTypes";
 
 export class punishments extends Command {
     constructor(client: ExtendedClient) {
@@ -31,6 +30,31 @@ export class punishments extends Command {
         }
 
         const repo = this.client.connection.getRepository(Infraction);
-        console.log(repo.findOne(member.guild.id));
+        const infractions: Infraction = await this.client.getInfraction(
+            message.guild.id,
+            member.id
+        );
+        if (!infractions) {
+            return sendErrorEmbed(
+                message.channel,
+                `:x: Oops! It looks like the user has no infractions.`
+            );
+        }
+
+        const embed = new MessageEmbed()
+            .setColor(0xffb200)
+            .setAuthor(`${member.user.username} (${member.id})`)
+            .setDescription(`**Username:** ${member.user.username}`)
+            .addField("**ID:**", member.id, true)
+            .addField("**Nickname:**", member.nickname, true)
+            .addField("**Joined:**", member.joinedAt, true)
+            .addField("**Created At:**", member.user.createdAt, true)
+            .addField("**Reason:**", infractions.reason, true)
+            .addField("**Type:**", infractions.inf_type, true)
+            .addField("**Moderator:**", `<@${infractions.moderator_id}>`, true)
+            .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+            .setTimestamp();
+
+        message.channel.send({ embed });
     }
 }

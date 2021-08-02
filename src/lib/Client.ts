@@ -17,12 +17,20 @@ import { createLogger } from "./utils/logging";
  * Extended client class.
  */
 export class ExtendedClient extends Client {
+    getInfraction(
+        guild_id: string,
+        author_id: string
+    ):
+        | import("../entities/Infraction").Infraction
+        | PromiseLike<import("../entities/Infraction").Infraction> {
+        throw new Error("Method not implemented.");
+    }
     readonly logger = createLogger("liquid");
     readonly commands = new Collection<string, Command>();
 
     guildPrefixCache = new Map<string, string>();
 
-    user!: ClientUser;
+    declare user: ClientUser;
     connection!: Connection;
 
     constructor(options?: ClientOptions) {

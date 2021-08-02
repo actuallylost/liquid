@@ -49,6 +49,22 @@ export class warn extends Command {
             );
         }
 
+        const warnEmbed = new MessageEmbed()
+            .setTitle(`${member.user.username} was successfully warned`)
+            .setColor("#2bd642")
+            .setDescription(
+                `:white_check_mark: Gotcha! ${member} has been warned with reason ${reason}.`
+            )
+            .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+            .setTimestamp();
+
+        const warnDM = new MessageEmbed()
+            .setTitle(`You have been banned from ${message.guild}`)
+            .setColor("#2bd642")
+            .addField(`Reason: `, reason)
+            .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+            .setTimestamp();
+
         const repo = this.client.connection.getRepository(Infraction);
         const storedWarning = new Infraction();
         storedWarning.inf_type = InfractionType.WARN;
@@ -57,5 +73,8 @@ export class warn extends Command {
         storedWarning.guild_id = message.guild.id;
         storedWarning.reason = reason;
         await repo.save(storedWarning);
+
+        member.send(warnDM);
+        return message.channel.send(warnEmbed);
     }
 }

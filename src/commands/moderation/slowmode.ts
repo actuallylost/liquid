@@ -14,7 +14,8 @@ export class slowmode extends Command {
     }
 
     /**
-     * Enables slowmode in chat.
+     * Enable slowmode in chat.
+     * @param sTime The time in seconds to enable slowmode for.
      */
     async run(message: DefiniteGuildMessage, args: string[]) {
         const prefix = this.client.guildPrefixCache.get(message.guild.id);
