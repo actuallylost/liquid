@@ -24,7 +24,7 @@ export class Avatar extends Command {
       if (url) {
         avatarAuthor.setImage(url);
       }
-      message.channel.send(avatarAuthor);
+      message.channel.send({embeds: [avatarAuthor]});
     } else {
       const user = message.mentions.users.first();
       if (user) {
@@ -37,7 +37,7 @@ export class Avatar extends Command {
         if (url) {
           avatarEmbed.setImage(url);
         }
-        message.channel.send(avatarEmbed);
+        message.channel.send({embeds: [avatarEmbed]});
       }
     }
   }

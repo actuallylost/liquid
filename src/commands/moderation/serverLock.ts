@@ -14,7 +14,7 @@ export class ServerLock extends Command {
   }
 
   async run(message: DefiniteGuildMessage, args: string[]) {
-    if (!message.member.hasPermission("MANAGE_MESSAGES")) {
+    if (!message.member.permissions.has("MANAGE_MESSAGES")) {
       return sendErrorEmbed(
         message.channel,
         ":x: Oops! You don't have permissions to run this command."
@@ -30,7 +30,7 @@ export class ServerLock extends Command {
         .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
         .setTimestamp();
       await message.guild.roles.everyone.setPermissions(["SEND_MESSAGES"]);
-      message.channel.send(unlockEmbed);
+      message.channel.send({embeds: [unlockEmbed]});
     } else {
       const lockEmbed = new MessageEmbed()
         .setTitle(`Server Locked`)
@@ -47,7 +47,7 @@ export class ServerLock extends Command {
         message.guild.roles.everyone.permissions.has("SEND_MESSAGES")
       );
       await message.guild.roles.everyone.setPermissions(update);
-      return message.channel.send(lockEmbed);
+      return message.channel.send({embeds: [lockEmbed]});
     }
   }
 }

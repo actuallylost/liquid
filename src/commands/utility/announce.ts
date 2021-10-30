@@ -45,11 +45,14 @@ export class announce extends Command {
       )
       .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
       .setTimestamp();
+    
+    setTimeout(function() {
+      message.delete().catch((err) => null);
+    }, 400);
 
-    message.delete({ timeout: 400 }).catch((err) => null);
-    message.channel.send(annConfirm);
+    message.channel.send({embeds: [annConfirm]});
     return (message.guild?.channels.cache.get(annChannel) as TextChannel).send(
-      annSend
+      {embeds: [annSend]}
     );
   }
 }

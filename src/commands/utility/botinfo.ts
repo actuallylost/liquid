@@ -30,7 +30,7 @@ export class BotInfo extends Command {
       .setTitle("Bot Information")
       .setColor("#e825a7")
       .addField("Bot Owner:", "Lost#1035")
-      .addField("Server Count:", this.client.guilds.cache.size)
+      .addField("Server Count:", this.client.guilds.cache.size.toString())
       .addField("Uptime:", this.padUptime(process.uptime() / 1000))
       .addField("Latency:", `${Math.round(this.client.ws.ping)}ms`)
       .addField("Version:", "0.9.2")
@@ -39,6 +39,6 @@ export class BotInfo extends Command {
         message.author.avatarURL() || undefined
       )
       .setTimestamp();
-    return message.channel.send(botinfoEmbed);
+    return message.channel.send({embeds: [botinfoEmbed]});
   }
 }

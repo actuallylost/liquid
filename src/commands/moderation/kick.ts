@@ -17,7 +17,7 @@ export class kick extends Command {
      * Kick a user.
      */
     async run(message: DefiniteGuildMessage, args: string[]) {
-        if (!message.member.hasPermission("KICK_MEMBERS")) {
+        if (!message.member.permissions.has("KICK_MEMBERS")) {
             return sendErrorEmbed(
                 message.channel,
                 ":x: Oops! You don't have permissions to run this command."
@@ -65,7 +65,7 @@ export class kick extends Command {
                 .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
                 .setTimestamp();
             userToKick.kick();
-            return message.channel.send(kickEmbedNoReason);
+            return message.channel.send({embeds: [kickEmbedNoReason]});
         }
 
         const kickEmbedReason = new MessageEmbed()
@@ -84,8 +84,8 @@ export class kick extends Command {
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
 
-        userToKick.send(kickDM);
+        userToKick.send({embeds: [kickDM]});
         userToKick.kick();
-        return message.channel.send(kickEmbedReason);
+        return message.channel.send({embeds: [kickEmbedReason]});
     }
 }

@@ -15,7 +15,7 @@ export class Prefix extends Command {
     }
 
     async run(message: DefiniteGuildMessage, args: string[]) {
-        if (!message.member.hasPermission("MANAGE_GUILD")) {
+        if (!message.member.permissions.has("MANAGE_GUILD")) {
             return sendErrorEmbed(
                 message.channel,
                 ":x: Oops! You don't have permissions to run this command."
@@ -50,6 +50,6 @@ export class Prefix extends Command {
             .setDescription(
                 `:white_check_mark: Roger that chief! Prefix has been set to \`${args[0]}\`.`
             );
-        return message.channel.send(prefixEmbed);
+        return message.channel.send({embeds: [prefixEmbed]});
     }
 }

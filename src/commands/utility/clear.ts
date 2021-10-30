@@ -15,7 +15,7 @@ export class Clear extends Command {
     }
 
     async run(message: DefiniteGuildMessage, args: string[]) {
-        if (!message.member.hasPermission("MANAGE_MESSAGES")) {
+        if (!message.member.permissions.has("MANAGE_MESSAGES")) {
             return sendErrorEmbed(
                 message.channel,
                 ":x: Oops! You don't have permissions to run this command."
@@ -49,7 +49,7 @@ export class Clear extends Command {
                 .setDescription(
                     `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} messages.`
                 );
-            message.channel.send(clearEmbed);
+        message.channel.send({embeds: [clearEmbed]});
         } else {
             // User Clear -
             message.channel.bulkDelete(messagesToDelete + 1);
@@ -66,7 +66,7 @@ export class Clear extends Command {
                 .setDescription(
                     `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`
                 );
-            return message.channel.send(clearEmbedUser);
+            return message.channel.send({embeds: [clearEmbedUser]});
         }
 
         // User Clear -

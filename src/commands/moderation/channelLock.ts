@@ -14,7 +14,7 @@ export class ChannelLock extends Command {
   }
 
   async run(message: DefiniteGuildMessage, args: string[]) {
-    if (!message.member.hasPermission("MANAGE_MESSAGES")) {
+    if (!message.member.permissions.has("MANAGE_MESSAGES")) {
       return sendErrorEmbed(
         message.channel,
         ":x: Oops! You don't have permissions to run this command."
@@ -34,10 +34,10 @@ export class ChannelLock extends Command {
         )
         .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
         .setTimestamp();
-      await message.channel.updateOverwrite(message.guild.roles.everyone, {
+      await message.channel.permissionOverwrites.edit(message.guild.roles.everyone, {
         SEND_MESSAGES: true,
       });
-      return message.channel.send(unlockEmbed);
+      return message.channel.send({embeds: [unlockEmbed]});
     } else {
       const lockEmbed = new MessageEmbed()
         .setTitle(`Channel Locked`)
@@ -47,10 +47,10 @@ export class ChannelLock extends Command {
         )
         .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
         .setTimestamp();
-      await message.channel.updateOverwrite(message.guild.roles.everyone, {
+      await message.channel.permissionOverwrites.edit(message.guild.roles.everyone, {
         SEND_MESSAGES: false,
       });
-      return message.channel.send(lockEmbed);
+      return message.channel.send({embeds: [lockEmbed]});
     }
   }
 }

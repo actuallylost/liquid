@@ -34,7 +34,7 @@ export class evalCmd extends Command {
                 .setDescription(
                     ":x: Sorry, you have to be the bot owner to use this command!"
                 );
-            return message.channel.send(evalEmbed);
+            return message.channel.send({embeds: [evalEmbed]});
         }
         try {
             const code = args.join(" ");
@@ -44,12 +44,11 @@ export class evalCmd extends Command {
             if (typeof evaled !== "string") {
                 evaled = inspect(evaled);
             }
+            const cleaned = await this.clean(evaled)
 
-            message.channel.send(this.clean(evaled), { code: "xl" });
-        } catch (err) {
-            message.channel.send(
-                `\`ERROR\` \`\`\`xl\n${this.clean(err)}\n\`\`\``
-            );
+            message.channel.send(`\`\`\`ts\n${cleaned}\n\`\`\``);
+        } catch (err: any) {
+            message.channel.send(`\`ERROR\` \`\`\`xl\n${this.clean(err)}\n\`\`\``);
         }
     }
 }

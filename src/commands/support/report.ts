@@ -1,4 +1,5 @@
 import { MessageEmbed, TextChannel } from "discord.js";
+import { setTimeout } from "timers";
 
 import { Issue } from "../../entities/Issue";
 import { sendErrorEmbed } from "../../errors";
@@ -35,9 +36,9 @@ export class issue extends Command {
                 "Submitted By »",
                 `${message.author} with ID: ${message.author.id}`
             )
-            .addField("Server »", message.guild)
-            .addField("Channel »", message.channel)
-            .addField("Time »", message.createdAt)
+            .addField("Server »", message.guild.toString())
+            .addField("Channel »", message.channel.toString())
+            .addField("Time »", message.createdAt.toString())
             .addField("Issue »", issueReason);
 
         const repo = this.client.connection.getRepository(Issue);
@@ -57,12 +58,15 @@ export class issue extends Command {
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
 
-        message.delete({ timeout: 400 }).catch((err) => null);
-        message.author.send(confirmEmbed);
+        setTimeout(function() {
+            message.delete().catch((err) => null);
+        }, 400);
+
+        message.author.send({embeds: [confirmEmbed]});
         return (this.client.guilds.cache
             .get("696042568525283467")
             ?.channels.cache.get("724252818688704582") as TextChannel).send(
-            issueEmbed
+            {embeds: [issueEmbed]}
         );
     }
 }

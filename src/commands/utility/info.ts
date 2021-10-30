@@ -28,6 +28,13 @@ export class info extends Command {
             EARLY_VERIFIED_BOT_DEVELOPER: "Verified Bot Developer",
         };
 
+        if (!message.author.flags) {
+            return;
+        }
+        if (!message.member.joinedAt) {
+            return;
+        }
+
         const serialized: Record<
             string,
             boolean
@@ -51,13 +58,13 @@ export class info extends Command {
                     .join(", ") || "None"
             )
             .addField("Badges:", stringified)
-            .addField("Created at:", message.author.createdAt)
-            .addField("Joined at", message.member?.joinedAt)
+            .addField("Created at:", message.author.createdAt.toString())
+            .addField("Joined at", message.member.joinedAt.toString())
             .setFooter(
                 `Requested by ${message.author.tag}`,
                 message.author.avatarURL() || undefined
             )
             .setTimestamp();
-        return message.channel.send(infoEmbed);
+        return message.channel.send({embeds: [infoEmbed]});
     }
 }

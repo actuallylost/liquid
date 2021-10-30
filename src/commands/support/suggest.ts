@@ -31,9 +31,9 @@ export class suggest extends Command {
                 "Submitted By »",
                 `${message.author} with ID: ${message.author.id}`
             )
-            .addField("Server »", message.guild)
-            .addField("Channel »", message.channel)
-            .addField("Time »", message.createdAt)
+            .addField("Server »", message.guild.toString())
+            .addField("Channel »", message.channel.toString())
+            .addField("Time »", message.createdAt.toString())
             .addField("Suggestion »", suggestion);
 
         const repo = this.client.connection.getRepository(Suggestion);
@@ -60,10 +60,13 @@ export class suggest extends Command {
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
 
-        message.delete({ timeout: 400 }).catch((err) => null);
-        message.author.send(confirmEmbed);
+        setTimeout(function() {
+            message.delete().catch((err) => null);
+        }, 400);
+        
+        message.author.send({embeds: [confirmEmbed]});
         return (message.guild.channels.cache.get(
             "724252807473004564"
-        ) as TextChannel).send(suggestionEmbed);
+        ) as TextChannel).send({embeds: [suggestionEmbed]});
     }
 }

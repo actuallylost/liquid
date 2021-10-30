@@ -26,6 +26,6 @@ export class help extends Command {
     this.client.commands.map((v) =>
       helpEmbed.addField(v.options.name, v.options.description)
     );
-    return message.channel.send(helpEmbed);
+    return message.channel.send({embeds: [helpEmbed]});
   }
 }

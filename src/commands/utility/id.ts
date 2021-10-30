@@ -23,11 +23,14 @@ export class id extends Command {
     const snowflake = SnowflakeUtil.deconstruct(idArg);
     const idTime = new MessageEmbed()
       .setColor("#85fff9")
-      .addField("Snowflake Date »", snowflake.date)
+      .addField("Snowflake Date »", snowflake.date.toString())
       .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
       .setTimestamp();
 
-    message.delete({ timeout: 400 }).catch((err) => null);
-    message.channel.send(idTime);
+    setTimeout(function() {
+      message.delete().catch((err) => null);
+    }, 400);
+
+    message.channel.send({embeds: [idTime]});
   }
 }

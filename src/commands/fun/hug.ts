@@ -15,24 +15,12 @@ export class hug extends Command {
 
   async run(message: DefiniteGuildMessage, args: string[]) {
     if (!args[0]) {
-      const hugErrorEmbed1 = new Discord.MessageEmbed()
-        .setTitle("Hug Error")
-        .setColor("#d91818")
-        .setDescription(
-          ":x: Oops! You didn't input an id or tagged a member to hug. Format is `+hug <user>`."
-        );
-      return message.channel.send(hugErrorEmbed1);
+      return sendErrorEmbed(message.channel, ":x: Oops! You didn't input an id or tagged a member to hug. Format is `+hug <user>`.")
     }
 
     const userToHug = message.mentions.users.first();
     if (!userToHug) {
-      const hugErrorEmbed2 = new Discord.MessageEmbed()
-        .setTitle("Hug Error")
-        .setColor("#d91818")
-        .setDescription(
-          ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+hug <user>`."
-        );
-      return message.channel.send(hugErrorEmbed2);
+      return sendErrorEmbed(message.channel, ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+hug <user>`.")
     }
 
     const hugEmbed = new Discord.MessageEmbed()
@@ -42,6 +30,6 @@ export class hug extends Command {
         `Awh, ${userToHug} was just hugged by ${message.author.username}. How sweet :3`
       );
 
-    return message.channel.send(hugEmbed);
+    return message.channel.send({embeds: [hugEmbed]});
   }
 }

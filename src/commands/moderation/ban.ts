@@ -19,7 +19,7 @@ export class ban extends Command {
     async run(message: DefiniteGuildMessage, args: string[]) {
         const prefix = this.client.guildPrefixCache.get(message.guild.id);
 
-        if (!message.member.hasPermission("BAN_MEMBERS")) {
+        if (!message.member.permissions.has("BAN_MEMBERS")) {
             return sendErrorEmbed(
                 message.channel,
                 ":x: Oops! You don't have permissions to run this command."
@@ -75,8 +75,8 @@ export class ban extends Command {
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
 
-        userToBan.send(banDM);
+        userToBan.send({embeds: [banDM]});
         userToBan.ban({ reason });
-        return message.channel.send(banReason);
+    return message.channel.send({embeds: [banReason]});
     }
 }
