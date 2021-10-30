@@ -11,32 +11,32 @@ export const actEvents = (client: ExtendedClient) => {
     }
 
     client
-        .on("guildBanAdd", (guild: Discord.Guild, member) => {
+        .on("guildBanAdd", (guildBan: Discord.GuildBan) => {
             const banEmbed = new MessageEmbed()
-                .setTitle(`Member Banned ${member.tag}`)
+                .setTitle(`Member Banned ${guildBan.user.tag}`)
                 .setColor("#A803A8")
-                .addField("Member »", `${member.username}`, true)
-                .addField("ID »", `${member.id}`, true)
+                .addField("Member »", `${guildBan.user.username}`, true)
+                .addField("ID »", `${guildBan.user.id}`, true)
                 .setFooter(
-                    `${member.username}`,
-                    member.avatarURL() || undefined
+                    `${guildBan.user.username}`,
+                    guildBan.user.avatarURL() || undefined
                 )
                 .setTimestamp();
 
-            return (logChannel as TextChannel).send(banEmbed);
+            (logChannel as TextChannel).send({embeds: [banEmbed]});
         })
-        .on("guildBanRemove", (guild: Discord.Guild, member) => {
+        .on("guildBanRemove", (guildBan: Discord.GuildBan) => {
             const unbanEmbed = new MessageEmbed()
-                .setTitle(`Member Unbanned (${member.tag})`)
+                .setTitle(`Member Unbanned (${guildBan.user.tag})`)
                 .setColor("#A803A8")
-                .addField("Member »", `${member.username}`, true)
-                .addField("ID »", `${member.id}`, true)
+                .addField("Member »", `${guildBan.user.username}`, true)
+                .addField("ID »", `${guildBan.user.id}`, true)
                 .setFooter(
-                    `${member.username}`,
-                    member.avatarURL() || undefined
+                    `${guildBan.user.username}`,
+                    guildBan.user.avatarURL() || undefined
                 )
                 .setTimestamp();
 
-            return (logChannel as TextChannel).send(unbanEmbed);
+            (logChannel as TextChannel).send({embeds: [unbanEmbed]});
         });
 };

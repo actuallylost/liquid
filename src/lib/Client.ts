@@ -4,7 +4,6 @@ import {
     ClientUser,
     Collection,
     Message,
-    DiscordAPIError,
 } from "discord.js";
 import { Connection, createConnection } from "typeorm";
 import { Levels } from "../entities/Levels";
