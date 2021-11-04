@@ -50,7 +50,7 @@ export class announce extends Command {
       message.delete().catch((err) => null);
     }, 400);
 
-    message.channel.send({embeds: [annConfirm]});
+    message.reply({embeds: [annConfirm]});
     return (message.guild?.channels.cache.get(annChannel) as TextChannel).send(
       {embeds: [annSend]}
     );

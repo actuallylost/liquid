@@ -49,7 +49,7 @@ export class Clear extends Command {
                 .setDescription(
                     `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} messages.`
                 );
-        message.channel.send({embeds: [clearEmbed]});
+        message.reply({embeds: [clearEmbed]});
         } else {
             // User Clear -
             message.channel.bulkDelete(messagesToDelete + 1);
@@ -66,7 +66,7 @@ export class Clear extends Command {
                 .setDescription(
                     `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`
                 );
-            return message.channel.send({embeds: [clearEmbedUser]});
+            return message.reply({embeds: [clearEmbedUser]});
         }
 
         // User Clear -

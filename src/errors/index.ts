@@ -15,7 +15,7 @@ export const sendErrorEmbed = (
   let embed = new MessageEmbed()
     .setTitle("Error")
     .setColor("#d91818")
-    // .setDescription(content);
+    .setDescription(content);
 
   if (modifier) {
     // Probably don't need to reassign.

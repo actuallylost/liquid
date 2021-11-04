@@ -3,3 +3,7 @@ export * from "./kick";
 export * from "./channelLock";
 export * from "./serverLock";
 export * from "./slowmode";
+export * from "./mute";
+export * from "./note";
+export * from "./warn";
+export * from "./punishments";

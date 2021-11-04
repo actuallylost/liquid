@@ -24,7 +24,7 @@ export const memberEvents = (client: ExtendedClient) => {
                 )
                 .setTimestamp();
 
-            return (logChannel as TextChannel).send(nicknameEmbed);
+            (logChannel as TextChannel).send({embeds: [nicknameEmbed]});
         } else {
             return;
         }

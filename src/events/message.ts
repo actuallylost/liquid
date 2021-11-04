@@ -25,6 +25,10 @@ export const msgEvents = (client: ExtendedClient) => {
                 return;
             }
 
+            if (!oldMessage.content || !newMessage.content) {
+                return;
+            }
+
             if (oldMessage.author.bot) {
                 return;
             }
@@ -40,7 +44,7 @@ export const msgEvents = (client: ExtendedClient) => {
                 )
                 .setTimestamp();
 
-            return (logChannel as TextChannel).send(editEmbed);
+            (logChannel as TextChannel).send({embeds: [editEmbed]});
             // return (logChannel as TextChannel).send(
             //    `\`[${newMessage.createdAt}]\` ${oldMessage.author.tag} (\`${oldMessage.author.id}\`) edited a message in **${oldMessage.channel}** \n **From »** \`${oldMessage.content}\` \n **To »** \`${newMessage.content}\``
             //);
@@ -58,7 +62,7 @@ export const msgEvents = (client: ExtendedClient) => {
                 return;
             }
 
-            return (logChannel as TextChannel).send(
+            (logChannel as TextChannel).send(
                 `Message was deleted with content ${message.content}`
             );
         });

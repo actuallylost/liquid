@@ -65,6 +65,6 @@ export class info extends Command {
                 message.author.avatarURL() || undefined
             )
             .setTimestamp();
-        return message.channel.send({embeds: [infoEmbed]});
+        return message.reply({embeds: [infoEmbed]});
     }
 }

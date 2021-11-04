@@ -30,7 +30,7 @@ export class ServerLock extends Command {
         .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
         .setTimestamp();
       await message.guild.roles.everyone.setPermissions(["SEND_MESSAGES"]);
-      message.channel.send({embeds: [unlockEmbed]});
+      message.reply({embeds: [unlockEmbed]});
     } else {
       const lockEmbed = new MessageEmbed()
         .setTitle(`Server Locked`)
@@ -47,7 +47,7 @@ export class ServerLock extends Command {
         message.guild.roles.everyone.permissions.has("SEND_MESSAGES")
       );
       await message.guild.roles.everyone.setPermissions(update);
-      return message.channel.send({embeds: [lockEmbed]});
+      return message.reply({embeds: [lockEmbed]});
     }
   }
 }

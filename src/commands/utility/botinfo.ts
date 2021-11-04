@@ -39,6 +39,6 @@ export class BotInfo extends Command {
         message.author.avatarURL() || undefined
       )
       .setTimestamp();
-    return message.channel.send({embeds: [botinfoEmbed]});
+    return message.reply({embeds: [botinfoEmbed]});
   }
 }

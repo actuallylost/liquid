@@ -77,6 +77,6 @@ export class ban extends Command {
 
         userToBan.send({embeds: [banDM]});
         userToBan.ban({ reason });
-    return message.channel.send({embeds: [banReason]});
+    return message.reply({embeds: [banReason]});
     }
 }

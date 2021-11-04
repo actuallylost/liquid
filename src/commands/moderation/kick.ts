@@ -65,7 +65,7 @@ export class kick extends Command {
                 .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
                 .setTimestamp();
             userToKick.kick();
-            return message.channel.send({embeds: [kickEmbedNoReason]});
+            return message.reply({embeds: [kickEmbedNoReason]});
         }
 
         const kickEmbedReason = new MessageEmbed()
@@ -86,6 +86,6 @@ export class kick extends Command {
 
         userToKick.send({embeds: [kickDM]});
         userToKick.kick();
-        return message.channel.send({embeds: [kickEmbedReason]});
+        return message.reply({embeds: [kickEmbedReason]});
     }
 }

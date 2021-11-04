@@ -31,6 +31,6 @@ export class id extends Command {
       message.delete().catch((err) => null);
     }, 400);
 
-    message.channel.send({embeds: [idTime]});
+    message.reply({embeds: [idTime]});
   }
 }

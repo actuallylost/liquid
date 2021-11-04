@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm";
 
 @Entity()
+
 export class Suggestion {
     @PrimaryGeneratedColumn()
     case!: number;

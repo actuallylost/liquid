@@ -50,6 +50,6 @@ export class Prefix extends Command {
             .setDescription(
                 `:white_check_mark: Roger that chief! Prefix has been set to \`${args[0]}\`.`
             );
-        return message.channel.send({embeds: [prefixEmbed]});
+        return message.reply({embeds: [prefixEmbed]});
     }
 }

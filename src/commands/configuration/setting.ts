@@ -6,7 +6,7 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 export class config extends Command {
     constructor(client: ExtendedClient) {
         super(client, {
-            name: "config",
+            name: "setting",
             guildOnly: true,
             description: "Allows you to configure the bot to your own liking.",
         });

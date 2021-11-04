@@ -1,5 +1,6 @@
 // Database -
 import "reflect-metadata";
+import { Intents } from "discord.js";
 
 // Commands -
 import * as commands from "./commands";
@@ -20,7 +21,7 @@ import { token } from "./env";
 // ExtendedClient -
 import { ExtendedClient } from "./lib/Client";
 
-export const client = new ExtendedClient();
+export const client = new ExtendedClient({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_BANS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES], allowedMentions: { parse: ["users", "roles"], repliedUser: true } });
 
 client.registerCommands(...Object.values(commands));
 

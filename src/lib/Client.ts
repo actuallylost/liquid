@@ -17,15 +17,23 @@ import { createLogger } from "./utils/logging";
  * Extended client class.
  */
 export class ExtendedClient extends Client {
+    getInfraction(
+        guild_id: string,
+        author_id: string
+    ):
+        | import("../entities/Infraction").Infraction
+        | PromiseLike<import("../entities/Infraction").Infraction> {
+        throw new Error("Method not implemented.");
+    }
     readonly logger = createLogger("liquid");
     readonly commands = new Collection<string, Command>();
 
     guildPrefixCache = new Map<string, string>();
 
-    user!: ClientUser;
+    declare user: ClientUser;
     connection!: Connection;
 
-    constructor(options?: ClientOptions) {
+    constructor(options: ClientOptions) {
         super(options);
         this.registerEventListeners();
         this.logger.level = "silly";
@@ -49,16 +57,16 @@ export class ExtendedClient extends Client {
     }
 
     protected registerEventListeners() {
-        this.on("debug", (msg) => this.logger.silly(msg))
-            .on("warn", (msg) => this.logger.warn(msg))
+        this.on("debug", (msg) => void this.logger.silly(msg))
+            .on("warn", (msg) => void this.logger.warn(msg))
             .on("error", (err) => {
-                console.error(err);
-                this.logger.error(err);
+                void console.error(err);
+                void this.logger.error(err);
             })
-            .on("ready", () => this.logger.info("Ready."));
+            .on("ready", () => void this.logger.info("Ready."));
 
         this.on("messageUpdate", (muo, mun: any) => this.extractCommand(mun));
-        this.on("message", (m) => this.extractCommand(m));
+        this.on("messageCreate", (m) => this.extractCommand(m));
 
         /**
          * Do the below thing later

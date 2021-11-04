@@ -37,7 +37,7 @@ export class ChannelLock extends Command {
       await message.channel.permissionOverwrites.edit(message.guild.roles.everyone, {
         SEND_MESSAGES: true,
       });
-      return message.channel.send({embeds: [unlockEmbed]});
+      return message.reply({embeds: [unlockEmbed]});
     } else {
       const lockEmbed = new MessageEmbed()
         .setTitle(`Channel Locked`)
@@ -50,7 +50,7 @@ export class ChannelLock extends Command {
       await message.channel.permissionOverwrites.edit(message.guild.roles.everyone, {
         SEND_MESSAGES: false,
       });
-      return message.channel.send({embeds: [lockEmbed]});
+      return message.reply({embeds: [lockEmbed]});
     }
   }
 }

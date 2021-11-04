@@ -7,16 +7,20 @@ import { Command, DefiniteGuildMessage } from "../../lib/Command";
 export class slowmode extends Command {
     constructor(client: ExtendedClient) {
         super(client, {
-            name: "slowmode",
+            name: "smode",
             guildOnly: true,
             description: "Enables, disables, or modifies the current slowmode.",
         });
     }
 
     /**
-     * Enables slowmode in chat.
-     */
+     * Enable slowmode in chat.
+      * @param sTime The time in seconds to enable slowmode for.
+      */
     async run(message: DefiniteGuildMessage, args: string[]) {
+
+        const prefix = this.client.guildPrefixCache.get(message.guild.id);
+
         if (!message.member.permissions.has("MANAGE_CHANNELS")) {
             return sendErrorEmbed(
                 message.channel,
@@ -27,20 +31,20 @@ export class slowmode extends Command {
         if (sTime === undefined) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you forgot to input the slowmode time. Format is `+slowmode <time>`."
+                `:x: Oops! It seems like you forgot to input the slowmode time. Format is \`${prefix}smode <time>\`.`
             );
         }
         if (isNaN(sTime)) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you did not input a number. Format is `+slowmode <time>`."
+                `:x: Oops! It seems like you did not input a number. Format is \`${prefix}smode <time>\`.`
             );
         }
 
         if (sTime > 21600) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you've input a number that exceeds the limit of **21600**. Format is `+slowmode <time>`."
+                `:x: Oops! It seems like you've input a number that exceeds the limit of **21600**. Format is \`${prefix}smode <time>\`.`
             );
         }
 
@@ -55,7 +59,7 @@ export class slowmode extends Command {
                 message.delete().catch((err) => null);
             }, 400);
                 
-            message.channel.send({embeds: [sDisable]});
+            message.reply({embeds: [sDisable]});
             return message.channel.setRateLimitPerUser(0);
         } else {
             const sSend = new MessageEmbed()
@@ -72,7 +76,7 @@ export class slowmode extends Command {
                 message.delete().catch((err) => null);
             }, 400);
 
-            message.channel.send({embeds: [sSend]});
+            message.reply({embeds: [sSend]});
             return message.channel.setRateLimitPerUser(sTime);
         }
     }

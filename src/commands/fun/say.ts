@@ -31,7 +31,10 @@ export class say extends Command {
       );
     }
 
-    message.delete({ timeout: 400 }).catch((err) => null);
-    message.channel.send(args.join(" "));
+    setTimeout(function() {
+      message.delete().catch((err) => null);
+  }, 400);
+  
+    message.reply(args.join(" "));
   }
 }
