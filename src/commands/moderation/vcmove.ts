@@ -1,4 +1,3 @@
-
 import { DiscordAPIError, MessageEmbed, VoiceChannel } from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
