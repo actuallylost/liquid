@@ -31,7 +31,7 @@ export class punishments extends Command {
         }
 
         const repo = this.client.connection.getRepository(Infraction);
-        const infractions: Infraction = await this.client.getInfraction(
+        const infractions: Infraction[] = await this.client.getInfraction(
             message.guild.id,
             member.id
         );
@@ -52,17 +52,16 @@ export class punishments extends Command {
 
         const embed = new MessageEmbed()
             .setColor(0xffb200)
-            .setAuthor(`${member.user.username} (${member.id})`)
-            .setDescription(`**Username:** ${member.user.username}`)
-            .addField("**ID:**", member.id, true)
-            .addField("**Nickname:**", member.nickname.toString(), true)
-            .addField("**Joined:**", member.joinedAt.toString(), true)
-            .addField("**Created At:**", member.user.createdAt.toString(), true)
-            .addField("**Reason:**", infractions.reason, true)
-            .addField("**Type:**", infractions.inf_type.toString(), true)
-            .addField("**Moderator:**", `<@${infractions.moderator_id}>`, true)
+            .setAuthor(`${member.displayName}'s Punishments`)
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
+
+        infractions.forEach((inf) => {
+            embed.addField(
+                `\`${inf.inf_type} - #${inf.id}\``,
+                `${inf.reason}`
+            );
+        });
 
         message.reply({embeds: [embed]});
     }

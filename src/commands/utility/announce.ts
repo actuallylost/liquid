@@ -41,7 +41,7 @@ export class announce extends Command {
       .setColor("#03bc22")
       .addField(
         "Success!",
-        `:white_check_mark: Announcement has been sent, please check ${annChannel}.`
+        `:white_check_mark: Announcement has been sent, please check <#${annChannel}>.`
       )
       .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
       .setTimestamp();

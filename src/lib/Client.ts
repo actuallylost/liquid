@@ -6,6 +6,7 @@ import {
     Message,
 } from "discord.js";
 import { Connection, createConnection } from "typeorm";
+import { Infraction } from "../entities/Infraction";
 import { Levels } from "../entities/Levels";
 
 import { ServerPrefix } from "../entities/ServerPrefix";
@@ -19,12 +20,11 @@ import { createLogger } from "./utils/logging";
 export class ExtendedClient extends Client {
     getInfraction(
         guild_id: string,
-        author_id: string
-    ):
-        | import("../entities/Infraction").Infraction
-        | PromiseLike<import("../entities/Infraction").Infraction> {
-        throw new Error("Method not implemented.");
+        offender_id: string
+    ) {
+        return this.connection.getRepository(Infraction).find( { where: { guild_id, offender_id } });
     }
+
     readonly logger = createLogger("liquid");
     readonly commands = new Collection<string, Command>();
 

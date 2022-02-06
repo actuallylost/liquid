@@ -66,7 +66,7 @@ export class suggest extends Command {
         
         message.author.send({embeds: [confirmEmbed]});
         return (message.guild.channels.cache.get(
-            "724252807473004564"
+            "629050929064312852"
         ) as TextChannel).send({embeds: [suggestionEmbed]});
     }
 }

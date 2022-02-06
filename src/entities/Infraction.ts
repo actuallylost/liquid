@@ -21,4 +21,7 @@ export class Infraction {
 
     @Column()
     reason!: string;
+
+    // @Column()
+    // createdAt!: number;
 }

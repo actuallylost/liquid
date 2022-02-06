@@ -22,28 +22,21 @@ export class note extends Command {
      * @returns {Promise<Message | Message[]>}
      */
     async run(message: DefiniteGuildMessage, args: string[]) {
-        const userToNote = message.guild.members.cache.get(args[0])
+        const member = message.guild.members.cache.get(args[0])
             ? message.guild.members.cache.get(args[0])
             : message.mentions.members?.first();
 
         const prefix = this.client.guildPrefixCache.get(message.guild.id);
-        const reason = args[1] || "None";
+        const reason = args.slice(1).join(" ") || "None";
 
-        if (!args[0]) {
-            return sendErrorEmbed(
-                message.channel,
-                `:x: Oops! It seems like you forgot to input a user to add a note to. Format is \`${prefix}note <user> [reason]\`.`
-            );
-        }
-
-        if (!userToNote) {
+        if (!member) {
             return sendErrorEmbed(
                 message.channel,
                 `:x: Oops! That user doesn't exist, maybe you typed something wrong? Format is \`${prefix}note <user> [reason]\`.`
             );
         }
 
-        if (userToNote === message.member) {
+        if (member === message.member) {
             return sendErrorEmbed(
                 message.channel,
                 `:x: Oops! You cannot add a note to yourself!`
@@ -53,10 +46,11 @@ export class note extends Command {
         const repo = this.client.connection.getRepository(Infraction);
         const storedNote = new Infraction();
         storedNote.inf_type = InfractionType.NOTE;
-        storedNote.offender_id = userToNote.id;
+        storedNote.offender_id = member.id;
         storedNote.moderator_id = message.member.id;
         storedNote.guild_id = message.guild.id;
         storedNote.reason = reason;
+        // storedNote.createdAt = Date.now()/1000;
         await repo.save(storedNote);
 
         const embed = new MessageEmbed()

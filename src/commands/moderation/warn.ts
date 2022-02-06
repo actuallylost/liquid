@@ -60,7 +60,7 @@ export class warn extends Command {
             .setTimestamp();
 
         const warnDM = new MessageEmbed()
-            .setTitle(`You have been banned from ${message.guild}`)
+            .setTitle(`You have been warned in ${message.guild}`)
             .setColor("#2bd642")
             .addField(`Reason: `, reason)
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)

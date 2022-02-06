@@ -4,6 +4,8 @@ import { Intents } from "discord.js";
 
 // Commands -
 import * as commands from "./commands";
+import { REST } from "@discordjs/rest";
+import { Routes } from "discord-api-types/v9";
 
 // Events -
 import * as events from "./events";
@@ -23,7 +25,25 @@ import { ExtendedClient } from "./lib/Client";
 
 export const client = new ExtendedClient({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_BANS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES], allowedMentions: { parse: ["users", "roles"], repliedUser: true } });
 
+const clientId = client.user?.id;
+const rest = new REST({ version: "9" }).setToken(token);
+
 client.registerCommands(...Object.values(commands));
+
+(async () => {
+	try {
+		console.log('Started refreshing application (/) commands.');
+
+        await rest.put(
+            Routes.applicationCommands(clientId),
+            { body: commands },
+        );
+
+		console.log('Successfully reloaded application (/) commands.');
+	} catch (error) {
+		console.error(error);
+	}
+})();
 
 client
     .on("ready", () => {

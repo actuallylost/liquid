@@ -1,8 +1,10 @@
 import { Client, Message, MessageEmbed } from "discord.js";
+import { Infraction } from "../../entities/Infraction";
 
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
+import { InfractionType } from "./InfractionTypes";
 
 export class kick extends Command {
     constructor(client: ExtendedClient) {
@@ -24,55 +26,39 @@ export class kick extends Command {
             );
         }
 
-        if (!args[0]) {
+        const member = message.guild.members.cache.get(args[0])
+        ? message.guild.members.cache.get(args[0])
+        : message.mentions.members?.first();
+
+        const prefix = this.client.guildPrefixCache.get(message.guild.id);
+        const reason = args.slice(2).join(" ") || "None";
+
+        if (!member) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you forgot to input a user to kick. Format is `+kick <user> [reason]`."
+                `:x: Oops! That user doesn't exist, maybe you typed something wrong? Format is \`${prefix}kick <user> [reason]\`.`
             );
         }
 
-        const userToKick = message.mentions.members?.first();
-
-        if (!userToKick) {
-            return sendErrorEmbed(
-                message.channel,
-                ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+kick <user> [reason]`."
-            );
-        }
-
-        if (userToKick === message.member) {
+        if (member === message.member) {
             return sendErrorEmbed(
                 message.channel,
                 ":x: Oops! You cannot kick yourself dummy!"
             );
         }
 
-        if (!userToKick.kickable) {
+        if (!member.kickable) {
             return sendErrorEmbed(
                 message.channel,
                 ":x: Oops! That user is not able to be kicked."
             );
         }
 
-        const kickReason = args[2];
-        if (!kickReason) {
-            const kickEmbedNoReason = new MessageEmbed()
-                .setTitle(`${userToKick.user.username} was successfully kicked`)
-                .setColor("#2bd642")
-                .setDescription(
-                    `:white_check_mark: Gotcha! ${userToKick} has been kicked.`
-                )
-                .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
-                .setTimestamp();
-            userToKick.kick();
-            return message.reply({embeds: [kickEmbedNoReason]});
-        }
-
         const kickEmbedReason = new MessageEmbed()
-            .setTitle(`${userToKick.user.username} was successfully kicked`)
+            .setTitle(`${member.user.username} was successfully kicked`)
             .setColor("#2bd642")
             .setDescription(
-                `:white_check_mark: Gotcha! ${userToKick} has been kicked for ${kickReason}.`
+                `:white_check_mark: Gotcha! ${member} has been kicked for ${reason}.`
             )
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
@@ -80,12 +66,21 @@ export class kick extends Command {
         const kickDM = new MessageEmbed()
             .setTitle(`You have been kicked from ${message.guild}`)
             .setColor("#2bd642")
-            .addField(`Reason: `, kickReason)
+            .addField(`Reason: `, reason)
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
 
-        userToKick.send({embeds: [kickDM]});
-        userToKick.kick();
+        const repo = this.client.connection.getRepository(Infraction);
+        const storedKick = new Infraction();
+        storedKick.inf_type = InfractionType.KICK;
+        storedKick.offender_id = member.id;
+        storedKick.moderator_id = message.member.id;
+        storedKick.guild_id = message.guild.id;
+        storedKick.reason = reason;
+        await repo.save(storedKick);
+
+        member.send({embeds: [kickDM]});
+        member.kick();
         return message.reply({embeds: [kickEmbedReason]});
     }
 }

@@ -24,7 +24,7 @@ export class unban extends Command {
             : message.mentions.members?.first();
 
         const prefix = this.client.guildPrefixCache.get(message.guild.id);
-        const reason = args[2] || "None";
+        const reason = args.slice(2).join(" ") || "None";
 
         if (!member) {
             return sendErrorEmbed(

@@ -1,7 +1,7 @@
 export enum InfractionType {
     NOTE = 0,
     WARN = 1,
-    MUTE = 2,
+    TIMEOUT = 2,
     UNMUTE = 3,
     KICK = 4,
     BAN = 5,

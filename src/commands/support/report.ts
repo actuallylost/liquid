@@ -64,8 +64,8 @@ export class issue extends Command {
 
         message.author.send({embeds: [confirmEmbed]});
         return (this.client.guilds.cache
-            .get("696042568525283467")
-            ?.channels.cache.get("724252818688704582") as TextChannel).send(
+            .get("614823903084150784")
+            ?.channels.cache.get("629050917680971776") as TextChannel).send(
             {embeds: [issueEmbed]}
         );
     }
