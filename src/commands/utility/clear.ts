@@ -1,11 +1,11 @@
 import * as Discord from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class Clear extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "clear",
             guildOnly: true,
@@ -25,7 +25,7 @@ export class Clear extends Command {
         if (!args[0]) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oh noes! Looks like you haven't specified how many messages to clear. The format is `+clear <amount> [user]`."
+                ":x: Oh noes! Looks like you haven't specified how many messages to clear. The [user]`."
             );
         }
 
@@ -33,7 +33,7 @@ export class Clear extends Command {
         if (isNaN(messagesToDelete)) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oh noes! Looks like you haven't input a number. The format is `+clear <amount> [user]`."
+                ":x: Oh noes! Looks like you haven't input a number. The [user]`."
             );
         }
 
@@ -49,7 +49,7 @@ export class Clear extends Command {
                 .setDescription(
                     `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} messages.`
                 );
-        message.reply({embeds: [clearEmbed]});
+            message.reply({ embeds: [clearEmbed] });
         } else {
             // User Clear -
             message.channel.bulkDelete(messagesToDelete + 1);
@@ -66,7 +66,7 @@ export class Clear extends Command {
                 .setDescription(
                     `:white_check_mark: Roger that chief! Cleared ${messagesToDelete} of ${userToClear}'s messages.`
                 );
-            return message.reply({embeds: [clearEmbedUser]});
+            return message.reply({ embeds: [clearEmbedUser] });
         }
 
         // User Clear -
@@ -74,7 +74,7 @@ export class Clear extends Command {
         // if (userToClear) {
         //     return sendErrorEmbed(
         //         message.channel,
-        //         ":x: Oops! That user doesn't exist, maybe you typed something wrong? Format is `+clear <amount> [user]`."
+        //         ":x: Oops! That user doesn't exist, maybe you typed something wrong? [user]`."
         //     );
         // }
     }

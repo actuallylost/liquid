@@ -3,11 +3,11 @@ import { setTimeout } from "timers";
 
 import { Issue } from "../../entities/Issue";
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class issue extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "issue",
             guildOnly: true,
@@ -21,7 +21,7 @@ export class issue extends Command {
         if (!issueReason) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! It seems like you forgot to input an issue. Format is \`${uwuPrefix}issue <issue>\`.`
+                `:x: Oops! It seems like you forgot to input an issue. ue <issue>\`.`
             );
         }
 
@@ -58,15 +58,15 @@ export class issue extends Command {
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
 
-        setTimeout(function() {
+        setTimeout(function () {
             message.delete().catch((err) => null);
         }, 400);
 
-        message.author.send({embeds: [confirmEmbed]});
+        message.author.send({ embeds: [confirmEmbed] });
         return (this.client.guilds.cache
             .get("614823903084150784")
-            ?.channels.cache.get("629050917680971776") as TextChannel).send(
-            {embeds: [issueEmbed]}
-        );
+            ?.channels.cache.get("629050917680971776") as TextChannel).send({
+            embeds: [issueEmbed],
+        });
     }
 }

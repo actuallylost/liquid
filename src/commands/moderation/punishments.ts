@@ -1,13 +1,12 @@
-
 import { MessageEmbed } from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 import { Infraction } from "../../entities/Infraction";
 
 export class punishments extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "punishments",
             guildOnly: true,
@@ -20,8 +19,6 @@ export class punishments extends Command {
         const member = message.guild.members.cache.get(args[0])
             ? message.guild.members.cache.get(args[0])
             : message.mentions.members?.first();
-
-        const prefix = this.client.guildPrefixCache.get(message.guild.id);
 
         if (!member) {
             return sendErrorEmbed(
@@ -57,12 +54,9 @@ export class punishments extends Command {
             .setTimestamp();
 
         infractions.forEach((inf) => {
-            embed.addField(
-                `\`${inf.inf_type} - #${inf.id}\``,
-                `${inf.reason}`
-            );
+            embed.addField(`\`${inf.inf_type} - #${inf.id}\``, `${inf.reason}`);
         });
 
-        message.reply({embeds: [embed]});
+        message.reply({ embeds: [embed] });
     }
 }

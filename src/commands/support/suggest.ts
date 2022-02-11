@@ -2,11 +2,11 @@ import { MessageEmbed, TextChannel } from "discord.js";
 
 import { Suggestion } from "../../entities/Suggestion";
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class suggest extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "suggest",
             guildOnly: true,
@@ -20,7 +20,7 @@ export class suggest extends Command {
         if (!suggestion) {
             return sendErrorEmbed(
                 message.channel,
-                ":x: Oops! It seems like you forgot to input a suggestion. Format is `+suggest <suggestion>`."
+                ":x: Oops! It seems like you forgot to input a suggestion. tion>`."
             );
         }
 
@@ -60,13 +60,13 @@ export class suggest extends Command {
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
 
-        setTimeout(function() {
+        setTimeout(function () {
             message.delete().catch((err) => null);
         }, 400);
-        
-        message.author.send({embeds: [confirmEmbed]});
+
+        message.author.send({ embeds: [confirmEmbed] });
         return (message.guild.channels.cache.get(
             "629050929064312852"
-        ) as TextChannel).send({embeds: [suggestionEmbed]});
+        ) as TextChannel).send({ embeds: [suggestionEmbed] });
     }
 }

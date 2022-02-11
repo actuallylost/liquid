@@ -1,9 +1,9 @@
 import * as Discord from "discord.js";
 
-import { ExtendedClient } from "../lib/Client";
+import { LiquidClient } from "../lib/Client";
 import { MessageEmbed, TextChannel } from "discord.js";
 
-export const guildEvents = (client: ExtendedClient) => {
+export const guildEvents = (client: LiquidClient) => {
     const logChannel = client.channels.cache.get("614904031743049734");
 
     if (!logChannel) {
@@ -27,7 +27,7 @@ export const guildEvents = (client: ExtendedClient) => {
                 )
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [welcEmbed]});
+            (logChannel as TextChannel).send({ embeds: [welcEmbed] });
         })
         .on("guildMemberRemove", (member) => {
             if (!member.user) {
@@ -45,7 +45,7 @@ export const guildEvents = (client: ExtendedClient) => {
                 )
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [leaveEmbed]});
+            (logChannel as TextChannel).send({ embeds: [leaveEmbed] });
         })
         .on("channelCreate", (channel) => {
             if (!client.user) {
@@ -60,7 +60,7 @@ export const guildEvents = (client: ExtendedClient) => {
                 .setFooter("Liquid", client.user.avatarURL() || undefined)
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [channelCreateEmbed]});
+            (logChannel as TextChannel).send({ embeds: [channelCreateEmbed] });
         })
         .on("channelDelete", (channel) => {
             if (!client.user) {
@@ -75,7 +75,7 @@ export const guildEvents = (client: ExtendedClient) => {
                 .setFooter("Liquid", client.user.avatarURL() || undefined)
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [channelDeleteEmbed]});
+            (logChannel as TextChannel).send({ embeds: [channelDeleteEmbed] });
         })
         .on("channelUpdate", (oldChannel, newChannel) => {
             if (!client.user) {
@@ -98,7 +98,7 @@ export const guildEvents = (client: ExtendedClient) => {
                 .setFooter("Liquid", client.user.avatarURL() || undefined)
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [channelUpdateEmbed]});
+            (logChannel as TextChannel).send({ embeds: [channelUpdateEmbed] });
         })
         .on("roleCreate", (role) => {
             if (!client.user) {
@@ -113,7 +113,7 @@ export const guildEvents = (client: ExtendedClient) => {
                 .setFooter("Liquid", client.user.avatarURL() || undefined)
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [roleCreatedEmbed]});
+            (logChannel as TextChannel).send({ embeds: [roleCreatedEmbed] });
         })
         .on("roleDelete", (role) => {
             if (!client.user) {
@@ -128,7 +128,7 @@ export const guildEvents = (client: ExtendedClient) => {
                 .setFooter("Liquid", client.user.avatarURL() || undefined)
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [roleDeletedEmbed]});
+            (logChannel as TextChannel).send({ embeds: [roleDeletedEmbed] });
         })
         .on("roleUpdate", (oldRole, newRole) => {
             if (!client.user) {
@@ -143,6 +143,6 @@ export const guildEvents = (client: ExtendedClient) => {
                 .setFooter("Liquid", client.user?.avatarURL() || undefined)
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [roleUpdateEmbed]});
+            (logChannel as TextChannel).send({ embeds: [roleUpdateEmbed] });
         });
 };

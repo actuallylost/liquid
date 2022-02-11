@@ -9,3 +9,4 @@ export * from "./warn";
 export * from "./punishments";
 export * from "./unban";
 export * from "./vcmove";
+export * from "./banSlash";

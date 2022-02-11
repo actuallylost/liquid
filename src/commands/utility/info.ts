@@ -1,9 +1,9 @@
 import { MessageEmbed, ReactionUserManager } from "discord.js";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class info extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "info",
             guildOnly: true,
@@ -65,6 +65,6 @@ export class info extends Command {
                 message.author.avatarURL() || undefined
             )
             .setTimestamp();
-        return message.reply({embeds: [infoEmbed]});
+        return message.reply({ embeds: [infoEmbed] });
     }
 }

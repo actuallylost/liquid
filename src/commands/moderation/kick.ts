@@ -2,12 +2,12 @@ import { Client, Message, MessageEmbed } from "discord.js";
 import { Infraction } from "../../entities/Infraction";
 
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 import { InfractionType } from "./InfractionTypes";
 
 export class kick extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "kick",
             guildOnly: true,
@@ -27,16 +27,15 @@ export class kick extends Command {
         }
 
         const member = message.guild.members.cache.get(args[0])
-        ? message.guild.members.cache.get(args[0])
-        : message.mentions.members?.first();
+            ? message.guild.members.cache.get(args[0])
+            : message.mentions.members?.first();
 
-        const prefix = this.client.guildPrefixCache.get(message.guild.id);
         const reason = args.slice(2).join(" ") || "None";
 
         if (!member) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! That user doesn't exist, maybe you typed something wrong? Format is \`${prefix}kick <user> [reason]\`.`
+                `:x: Oops! That user doesn't exist, maybe you typed something wrong? user> [reason]\`.`
             );
         }
 
@@ -79,8 +78,8 @@ export class kick extends Command {
         storedKick.reason = reason;
         await repo.save(storedKick);
 
-        member.send({embeds: [kickDM]});
+        member.send({ embeds: [kickDM] });
         member.kick();
-        return message.reply({embeds: [kickEmbedReason]});
+        return message.reply({ embeds: [kickEmbedReason] });
     }
 }

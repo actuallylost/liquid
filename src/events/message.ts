@@ -2,9 +2,9 @@ import * as Discord from "discord.js";
 
 import { MessageEmbed, TextChannel } from "discord.js";
 
-import { ExtendedClient } from "../lib/Client";
+import { LiquidClient } from "../lib/Client";
 
-export const msgEvents = (client: ExtendedClient) => {
+export const msgEvents = (client: LiquidClient) => {
     const logChannel = client.channels.cache.get("614904031743049734");
 
     if (!logChannel) {
@@ -44,7 +44,7 @@ export const msgEvents = (client: ExtendedClient) => {
                 )
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [editEmbed]});
+            (logChannel as TextChannel).send({ embeds: [editEmbed] });
             // return (logChannel as TextChannel).send(
             //    `\`[${newMessage.createdAt}]\` ${oldMessage.author.tag} (\`${oldMessage.author.id}\`) edited a message in **${oldMessage.channel}** \n **From »** \`${oldMessage.content}\` \n **To »** \`${newMessage.content}\``
             //);

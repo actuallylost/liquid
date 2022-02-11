@@ -1,14 +1,13 @@
-
 import { MessageEmbed } from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 import { Infraction } from "../../entities/Infraction";
 import { InfractionType } from "./InfractionTypes";
 
 export class warn extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "warn",
             guildOnly: true,
@@ -26,7 +25,6 @@ export class warn extends Command {
             ? message.guild.members.cache.get(args[0])
             : message.mentions.members?.first();
 
-        const prefix = this.client.guildPrefixCache.get(message.guild.id);
         const reason = args[1];
 
         if (!member) {
@@ -46,7 +44,7 @@ export class warn extends Command {
         if (!reason) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! It looks like you forgot to input a warning reason. Format is \`${prefix}warn <user> <reason>\`.`
+                `:x: Oops! It looks like you forgot to input a warning reason. user> <reason>\`.`
             );
         }
 
@@ -75,7 +73,7 @@ export class warn extends Command {
         storedWarning.reason = reason;
         await repo.save(storedWarning);
 
-        member.send({embeds: [warnDM]});
-        return message.reply({embeds: [warnEmbed]});
+        member.send({ embeds: [warnDM] });
+        return message.reply({ embeds: [warnEmbed] });
     }
 }

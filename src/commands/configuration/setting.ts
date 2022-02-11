@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
 
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class config extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "setting",
             guildOnly: true,

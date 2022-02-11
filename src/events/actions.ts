@@ -1,9 +1,9 @@
 import * as Discord from "discord.js";
 
-import { ExtendedClient } from "../lib/Client";
+import { LiquidClient } from "../lib/Client";
 import { MessageEmbed, TextChannel } from "discord.js";
 
-export const actEvents = (client: ExtendedClient) => {
+export const actEvents = (client: LiquidClient) => {
     const logChannel = client.channels.cache.get("614904031743049734");
 
     if (!logChannel) {
@@ -23,7 +23,7 @@ export const actEvents = (client: ExtendedClient) => {
                 )
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [banEmbed]});
+            (logChannel as TextChannel).send({ embeds: [banEmbed] });
         })
         .on("guildBanRemove", (guildBan: Discord.GuildBan) => {
             const unbanEmbed = new MessageEmbed()
@@ -37,6 +37,6 @@ export const actEvents = (client: ExtendedClient) => {
                 )
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [unbanEmbed]});
+            (logChannel as TextChannel).send({ embeds: [unbanEmbed] });
         });
 };

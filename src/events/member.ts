@@ -1,9 +1,9 @@
 import * as Discord from "discord.js";
 
-import { ExtendedClient } from "../lib/Client";
+import { LiquidClient } from "../lib/Client";
 import { MessageEmbed, TextChannel } from "discord.js";
 
-export const memberEvents = (client: ExtendedClient) => {
+export const memberEvents = (client: LiquidClient) => {
     const logChannel = client.channels.cache.get("614904031743049734");
 
     if (!logChannel) {
@@ -24,7 +24,7 @@ export const memberEvents = (client: ExtendedClient) => {
                 )
                 .setTimestamp();
 
-            (logChannel as TextChannel).send({embeds: [nicknameEmbed]});
+            (logChannel as TextChannel).send({ embeds: [nicknameEmbed] });
         } else {
             return;
         }

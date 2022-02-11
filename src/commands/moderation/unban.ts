@@ -1,11 +1,11 @@
 import { MessageEmbed } from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class unban extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "unban",
             guildOnly: true,
@@ -14,22 +14,21 @@ export class unban extends Command {
     }
 
     /**
-      * Unban a user.
-      * @param member Unbanned user.
-      * @param reason Reason for unban.
-      */
+     * Unban a user.
+     * @param member Unbanned user.
+     * @param reason Reason for unban.
+     */
     async run(message: DefiniteGuildMessage, args: string[]) {
         const member = message.guild.members.cache.get(args[0])
             ? message.guild.members.cache.get(args[0])
             : message.mentions.members?.first();
 
-        const prefix = this.client.guildPrefixCache.get(message.guild.id);
         const reason = args.slice(2).join(" ") || "None";
 
         if (!member) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! It seems like you forgot to input a user to unban. Format is \`${prefix}unban <user> [reason]\`.`
+                `:x: Oops! It seems like you forgot to input a user to unban. <user> [reason]\`.`
             );
         }
 

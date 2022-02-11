@@ -1,6 +1,6 @@
 import { Guild, GuildMember, Message, TextChannel } from "discord.js";
 
-import { ExtendedClient } from "./Client";
+import { LiquidClient } from "./Client";
 
 interface BaseCommandOptions {
     name: string;
@@ -17,7 +17,7 @@ interface CommandOptions extends BaseCommandOptions {
  */
 export abstract class Command {
     constructor(
-        readonly client: ExtendedClient,
+        readonly client: LiquidClient,
         readonly options: CommandOptions
     ) {}
 

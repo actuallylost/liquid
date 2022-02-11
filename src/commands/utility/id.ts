@@ -1,36 +1,36 @@
 import { MessageEmbed, TextChannel, Message, SnowflakeUtil } from "discord.js";
 
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 
 export class id extends Command {
-  constructor(client: ExtendedClient) {
-    super(client, {
-      name: "id",
-      guildOnly: true,
-      description: "Provides the date of a Snowflake.",
-    });
-  }
-  async run(message: DefiniteGuildMessage, args: string[]) {
-    const idArg = args[0];
-    if (!idArg) {
-      return sendErrorEmbed(
-        message.channel,
-        ":x: Oops! It seems like you forgot to input an ID to check. Format is +id <snowflake>"
-      );
+    constructor(client: LiquidClient) {
+        super(client, {
+            name: "id",
+            guildOnly: true,
+            description: "Provides the date of a Snowflake.",
+        });
     }
-    const snowflake = SnowflakeUtil.deconstruct(idArg);
-    const idTime = new MessageEmbed()
-      .setColor("#85fff9")
-      .addField("Snowflake Date »", snowflake.date.toString())
-      .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
-      .setTimestamp();
+    async run(message: DefiniteGuildMessage, args: string[]) {
+        const idArg = args[0];
+        if (!idArg) {
+            return sendErrorEmbed(
+                message.channel,
+                ":x: Oops! It seems like you forgot to input an ID to check. Format is +id <snowflake>"
+            );
+        }
+        const snowflake = SnowflakeUtil.deconstruct(idArg);
+        const idTime = new MessageEmbed()
+            .setColor("#85fff9")
+            .addField("Snowflake Date »", snowflake.date.toString())
+            .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
+            .setTimestamp();
 
-    setTimeout(function() {
-      message.delete().catch((err) => null);
-    }, 400);
+        setTimeout(function () {
+            message.delete().catch((err) => null);
+        }, 400);
 
-    message.reply({embeds: [idTime]});
-  }
+        message.reply({ embeds: [idTime] });
+    }
 }

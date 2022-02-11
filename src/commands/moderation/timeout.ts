@@ -1,14 +1,13 @@
-
 import { MessageEmbed } from "discord.js";
 import { Infraction } from "../../entities/Infraction";
 
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 import { InfractionType } from "./InfractionTypes";
 
 export class timeout extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "timeout",
             guildOnly: true,
@@ -27,22 +26,20 @@ export class timeout extends Command {
             ? message.guild.members.cache.get(args[0])
             : message.mentions.members?.first();
 
-        const prefix = this.client.guildPrefixCache.get(message.guild.id);
         const duration = args[1];
         const reason = args.slice(2).join(" ") || "None";
-        
 
         if (!args[0]) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! It seems like you forgot to input a user to time out. Format is \`${prefix}timeout <user> <duration> [reason]\`.`
+                `:x: Oops! It seems like you forgot to input a user to time out. t <user> <duration> [reason]\`.`
             );
         }
 
         if (!member) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! That user doesn't exist, maybe you typed something wrong? Format is \`${prefix}timeout <user> <duration> [reason]\`.`
+                `:x: Oops! That user doesn't exist, maybe you typed something wrong? t <user> <duration> [reason]\`.`
             );
         }
 
@@ -56,14 +53,14 @@ export class timeout extends Command {
         if (!duration) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! Looks like you forgot to enter a duration! Format is \`${prefix}timeout <user> <duration> [reason]\`.`
+                `:x: Oops! Looks like you forgot to enter a duration! t <user> <duration> [reason]\`.`
             );
         }
 
         if (isNaN(parseInt(duration))) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! The duration you entered is not a number! Format is \`${prefix}timeout <user> <duration> [reason]\`.`
+                `:x: Oops! The duration you entered is not a number! t <user> <duration> [reason]\`.`
             );
         }
 
@@ -83,7 +80,7 @@ export class timeout extends Command {
             .addField("Duration: ", duration)
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
-        
+
         const timeoutDuration = parseInt(duration) * 1000;
 
         const repo = this.client.connection.getRepository(Infraction);
@@ -95,8 +92,8 @@ export class timeout extends Command {
         storedTimeout.reason = reason;
         await repo.save(storedTimeout);
 
-        member.send({embeds: [timeoutDM]});
+        member.send({ embeds: [timeoutDM] });
         member.timeout(timeoutDuration, reason);
-        return message.reply({embeds: [timeoutEmbed]});
+        return message.reply({ embeds: [timeoutEmbed] });
     }
 }

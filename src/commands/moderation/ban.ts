@@ -2,12 +2,12 @@ import { MessageEmbed } from "discord.js";
 import { Infraction } from "../../entities/Infraction";
 
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 import { InfractionType } from "./InfractionTypes";
 
 export class ban extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "ban",
             guildOnly: true,
@@ -22,7 +22,7 @@ export class ban extends Command {
         const member = message.guild.members.cache.get(args[0])
             ? message.guild.members.cache.get(args[0])
             : message.mentions.members?.first();
-        const prefix = this.client.guildPrefixCache.get(message.guild.id);
+
         const reason = args.slice(2).join(" ") || "None";
 
         if (!message.member.permissions.has("BAN_MEMBERS")) {
@@ -35,14 +35,14 @@ export class ban extends Command {
         if (!args[0]) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! It seems like you forgot to input a user to ban. Format is \`${prefix}ban <user> [reason]\`.`
+                `:x: Oops! It seems like you forgot to input a user to ban. ser> [reason]\`.`
             );
         }
 
         if (!member) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! That user doesn't exist, maybe you typed something wrong? Format is \`${prefix}ban <user> [reason]\`.`
+                `:x: Oops! That user doesn't exist, maybe you typed something wrong? ser> [reason]\`.`
             );
         }
 
@@ -87,8 +87,8 @@ export class ban extends Command {
         storedBan.reason = reason;
         await repo.save(storedBan);
 
-        member.send({embeds: [banDM]});
+        member.send({ embeds: [banDM] });
         member.ban({ reason });
-    return message.reply({embeds: [banReason]});
+        return message.reply({ embeds: [banReason] });
     }
 }

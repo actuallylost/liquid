@@ -1,14 +1,13 @@
-
 import { Client, Message, MessageEmbed } from "discord.js";
 import { Infraction } from "../../entities/Infraction";
 
 import { sendErrorEmbed } from "../../errors";
-import { ExtendedClient } from "../../lib/Client";
+import { LiquidClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
 import { InfractionType } from "./InfractionTypes";
 
 export class note extends Command {
-    constructor(client: ExtendedClient) {
+    constructor(client: LiquidClient) {
         super(client, {
             name: "note",
             guildOnly: true,
@@ -26,13 +25,12 @@ export class note extends Command {
             ? message.guild.members.cache.get(args[0])
             : message.mentions.members?.first();
 
-        const prefix = this.client.guildPrefixCache.get(message.guild.id);
         const reason = args.slice(1).join(" ") || "None";
 
         if (!member) {
             return sendErrorEmbed(
                 message.channel,
-                `:x: Oops! That user doesn't exist, maybe you typed something wrong? Format is \`${prefix}note <user> [reason]\`.`
+                `:x: Oops! That user doesn't exist, maybe you typed something wrong? user> [reason]\`.`
             );
         }
 
@@ -60,6 +58,6 @@ export class note extends Command {
             .addField("Reason", reason, true)
             .setFooter("Liquid", this.client.user?.avatarURL() || undefined)
             .setTimestamp();
-        return message.reply({embeds: [embed]});
+        return message.reply({ embeds: [embed] });
     }
 }

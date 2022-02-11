@@ -1,16 +1,16 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "CommonJS",
-    "strict": true,
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "CommonJS",
+        "strict": true,
 
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
 
-    "outDir": "dist"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+        "outDir": "dist"
+    },
+    "include": ["src", "src/.env"],
+    "exclude": ["node_modules"]
 }
