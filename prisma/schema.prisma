@@ -6,3 +6,51 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum InfractionType {
+  NOTE
+  WARN
+  TIMEOUT
+  UNMUTE
+  KICK
+  BAN
+  UNBAN
+}
+
+model Infraction {
+  id           Int            @id(map: "PK_84f0acef2fce303c93b75e75142") @default(autoincrement())
+  inf_type     InfractionType
+  offender_id  String         @db.VarChar
+  moderator_id String         @db.VarChar
+  guild_id     String         @db.VarChar
+  reason       String         @db.VarChar
+  created_at   DateTime       @default(now())
+}
+
+model Issue {
+  id      Int    @id(map: "PK_f80e086c249b9f3f3ff2fd321b7") @default(autoincrement())
+  content String @db.VarChar
+}
+
+model Levels {
+  user_id  String @id(map: "PK_8624c3b54a964baf4ee9fec2d26") @db.VarChar
+  guild_id String @db.VarChar
+  xp       Int
+  level    Int
+}
+
+model ServerPrefix {
+  id     String @id(map: "PK_864776cbecf364475ba0a21ab02") @db.VarChar
+  prefix String @db.VarChar
+}
+
+model Suggestion {
+  id           Int    @default(autoincrement())
+  guild_id     String @db.VarChar
+  channel_id   String @db.VarChar
+  submitter_id String @db.VarChar
+  message_id   String @db.VarChar
+  content      String @db.VarChar
+
+  @@id([id, guild_id, channel_id, submitter_id, message_id], map: "PK_ef6e39b5d315de4767f8ed499fa")
+}

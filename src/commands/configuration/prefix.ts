@@ -1,6 +1,5 @@
 import * as Discord from "discord.js";
 
-import { ServerPrefix } from "../../entities/ServerPrefix";
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
@@ -10,7 +9,7 @@ export class Prefix extends Command {
         super(client, {
             name: "prefix",
             guildOnly: true,
-            description: "Changes the bot prefix, locally.",
+            description: "Changes the bot prefix locally.",
         });
     }
 
