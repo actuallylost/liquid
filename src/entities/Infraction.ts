@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { InfractionType } from "../commands/moderation/InfractionTypes";
+
+import { InfractionType } from "../types/InfractionTypes";
 
 @Entity()
 

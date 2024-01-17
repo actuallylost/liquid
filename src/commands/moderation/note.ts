@@ -1,11 +1,11 @@
 
-import { Client, Message, MessageEmbed } from "discord.js";
-import { Infraction } from "../../entities/Infraction";
+import { MessageEmbed } from "discord.js";
 
+import { Infraction } from "../../entities/Infraction";
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
-import { InfractionType } from "./InfractionTypes";
+import { InfractionType } from "../../types/InfractionTypes";
 
 export class note extends Command {
     constructor(client: ExtendedClient) {

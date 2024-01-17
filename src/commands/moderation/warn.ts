@@ -1,11 +1,11 @@
 
 import { MessageEmbed } from "discord.js";
 
+import { Infraction } from "../../entities/Infraction";
 import { sendErrorEmbed } from "../../errors";
 import { ExtendedClient } from "../../lib/Client";
 import { Command, DefiniteGuildMessage } from "../../lib/Command";
-import { Infraction } from "../../entities/Infraction";
-import { InfractionType } from "./InfractionTypes";
+import { InfractionType } from "../../types/InfractionTypes";
 
 export class warn extends Command {
     constructor(client: ExtendedClient) {
