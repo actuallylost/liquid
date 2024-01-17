@@ -1,29 +1,32 @@
 {
     "name": "liquid",
-    "version": "0.10.0",
-    "description": "",
+    "version": "0.11.0",
     "main": "src/index.ts",
     "scripts": {
-        "start": "ts-node src"
+        "dev": "ts-node src",
+        "prepare": "husky install"
     },
     "keywords": [],
-    "author": "lost the cutie",
-    "license": "ISC",
+    "author": "actuallylost",
     "dependencies": {
-        "@discordjs/rest": "^0.1.0-canary.0",
+        "@discordjs/rest": "^2.2.0",
         "chalk": "^4.1.0",
-        "discord-api-types": "^0.24.0",
+        "discord-api-types": "^0.37.0",
         "discord.js": "^13.4.0",
         "pg": "^8.3.0",
-        "reflect-metadata": "^0.1.13",
-        "typeorm": "^0.2.25",
+        "reflect-metadata": "^0.2.1",
+        "typeorm": "^0.3.19",
         "winston": "^3.3.3",
-        "yarn": "^1.22.17"
+        "husky": "^8.0.3"
     },
     "devDependencies": {
         "@types/node": "^14.0.22",
-        "prettier": "^2.0.5",
-        "ts-node": "^8.10.2",
-        "typescript": "^4.4.4"
+        "prettier": "^3.2.4",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3",
+        "@commitlint/cli": "^18.4.3",
+        "@commitlint/config-conventional": "^18.4.3",
+        "eslint-config-prettier": "^9.1.0",
+        "lint-staged": "^15.2.0"
     }
 }

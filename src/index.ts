@@ -1,25 +1,17 @@
 // Database -
 import "reflect-metadata";
+
+import { Routes } from "discord-api-types/v9";
 import { Intents } from "discord.js";
 
-// Commands -
-import * as commands from "./commands";
 import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
-
-// Events -
-import * as events from "./events";
-import {
-    actEvents,
-    memberEvents,
-    msgEvents,
-    guildEvents,
-    voiceEvents,
-} from "./events";
 
 // Token -
-import { token } from "./env";
-
+import { token } from "./.env";
+// Commands -
+import * as commands from "./commands";
+// Events -
+import { actEvents, guildEvents, memberEvents, msgEvents, voiceEvents } from "./events";
 // ExtendedClient -
 import { ExtendedClient } from "./lib/Client";
 

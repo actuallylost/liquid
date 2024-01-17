@@ -1,14 +1,7 @@
-import {
-    Client,
-    ClientOptions,
-    ClientUser,
-    Collection,
-    Message,
-} from "discord.js";
+import { Client, ClientOptions, ClientUser, Collection, Message } from "discord.js";
 import { Connection, createConnection } from "typeorm";
-import { Infraction } from "../entities/Infraction";
-import { Levels } from "../entities/Levels";
 
+import { Infraction } from "../entities/Infraction";
 import { ServerPrefix } from "../entities/ServerPrefix";
 import { botPrefix } from "../env";
 import { Command } from "./Command";

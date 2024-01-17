@@ -1,5 +1,3 @@
-import * as Discord from "discord.js";
-
 import { MessageEmbed, TextChannel } from "discord.js";
 
 import { ExtendedClient } from "../lib/Client";
