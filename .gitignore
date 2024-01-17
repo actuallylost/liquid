@@ -63,3 +63,5 @@ typings/
 src/env.ts
 
 ormconfig.json
+
+.DS_Store

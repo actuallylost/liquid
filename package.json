@@ -7,7 +7,7 @@
         "start": "ts-node src"
     },
     "keywords": [],
-    "author": "lost the cutie",
+    "author": "actuallylost",
     "license": "ISC",
     "dependencies": {
         "@discordjs/rest": "^0.1.0-canary.0",
